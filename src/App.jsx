@@ -15,19 +15,18 @@ const Game = () => {
     arr[53] = true;
     arr[54] = true;
     arr[55] = true;
-    arr[56] = "apple";
+    arr[100] = "apple";
     setSquares(arr);
   }, []);
 
   return (
-    <div className="canvas">
-      {squares.map((item, index) => {
-        return (
-          <h1 key={index}>
-            <Square snake={item} />
-          </h1>
-        );
-      })}
+    <div className="app">
+      <h1>Snake Game</h1>
+      <div className="canvas">
+        {squares.map((item, index) => {
+          return <Square snake={item} />;
+        })}
+      </div>
     </div>
   );
 };
