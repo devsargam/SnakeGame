@@ -1,12 +1,17 @@
 import React from "react";
 
-export default function Square({ snake }) {
+const Square = ({ snake, index }) => {
   return (
     <div
       className="square"
       style={{
         backgroundColor: snake == "apple" ? "red" : snake ? "black" : "pink",
+        fontSize: "10px",
       }}
-    ></div>
+    >
+      {index}
+    </div>
   );
-}
+};
+
+export default Square;

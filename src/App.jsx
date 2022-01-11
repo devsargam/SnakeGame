@@ -10,12 +10,12 @@ const Game = () => {
     for (let i = 0; i < 900; i++) {
       arr.push(0);
     }
-    arr[50] = true;
-    arr[51] = true;
-    arr[52] = true;
-    arr[53] = true;
-    arr[54] = true;
-    arr[55] = true;
+    arr[150 + 5] = true;
+    arr[151 + 5] = true;
+    arr[152 + 5] = true;
+    arr[153 + 5] = true;
+    arr[154 + 5] = true;
+    arr[155 + 5] = true;
     arr[100] = "apple";
     setSquares(arr);
     window.addEventListener("keydown", (e) => {
@@ -56,7 +56,7 @@ const Game = () => {
       <h1>Snake Game</h1>
       <div className="canvas">
         {squares.map((item, index) => {
-          return <Square snake={item} />;
+          return <Square snake={item} index={index} />;
         })}
       </div>
       <h1>You pressed {key}</h1>
