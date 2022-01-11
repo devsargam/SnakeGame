@@ -7,18 +7,24 @@ const Game = () => {
   useEffect(() => {
     const arr = [];
     for (let i = 0; i < 900; i++) {
-      arr.push(i);
+      arr.push(0);
     }
+    arr[50] = true;
+    arr[51] = true;
+    arr[52] = true;
+    arr[53] = true;
+    arr[54] = true;
+    arr[55] = true;
+    arr[56] = "apple";
     setSquares(arr);
   }, []);
 
   return (
     <div className="canvas">
       {squares.map((item, index) => {
-        console.log(squares);
         return (
           <h1 key={index}>
-            <Square />
+            <Square snake={item} />
           </h1>
         );
       })}

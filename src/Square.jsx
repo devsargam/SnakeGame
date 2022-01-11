@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Square() {
+export default function Square({ snake }) {
   return (
     <div
       className="square"
@@ -8,7 +8,7 @@ export default function Square() {
         height: "20px",
         width: "20px",
         border: "1px solid black",
-        backgroundColor: "pink",
+        backgroundColor: snake == "apple" ? "red" : snake ? "black" : "pink",
         margin: 0,
         padding: 0,
       }}
