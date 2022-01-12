@@ -1,0 +1,23 @@
+{
+  "name": "snakegame",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "vite ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sargam-poudel/SnakeGame.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sargam-poudel/SnakeGame/issues"
+  },
+  "homepage": "https://github.com/sargam-poudel/SnakeGame#readme",
+  "dependencies": {
+    "vite": "^2.7.10"
+  }
+}
