@@ -2,25 +2,38 @@ import React, { useEffect, useState } from "react";
 import Square from "./Square";
 import "./App.css";
 
+const getRandomSpot = () => {
+  return Math.floor(Math.random() * (895 - 5) + 10);
+};
+
 const Game = () => {
   const [squares, setSquares] = useState([]);
   const [key, setKey] = useState("");
+  const [snake, setSnake] = useState(getRandomSpot());
+  const [apple, setApple] = useState(getRandomSpot());
+
+  useEffect(() => {
+    console.log(squares.filter((el) => !(el === 0)));
+    // Do something actually
+    // Yes yes I agree
+  }, [snake]);
+
   useEffect(() => {
     const arr = [];
-    for (let i = 0; i < 900; i++) {
+    for (let i = 0; i < 30 ** 2; i++) {
       arr.push(0);
     }
-    arr[150 + 5] = true;
-    arr[151 + 5] = true;
-    arr[152 + 5] = true;
-    arr[153 + 5] = true;
-    arr[154 + 5] = true;
-    arr[155 + 5] = true;
-    arr[100] = "apple";
+    arr[snake] = true;
+    arr[apple] = "apple";
     setSquares(arr);
     window.addEventListener("keydown", (e) => {
       handleClick(e.key);
     });
+    const gameTimer = setInterval(() => {
+      // setSnake(snake + 1);
+      // console.log(snake);
+    }, 1000 / 60);
+    return () => clearInterval(gameTimer);
   }, []);
 
   const handleClick = (key) => {
@@ -28,6 +41,7 @@ const Game = () => {
       case "w":
       case "ArrowUp":
         console.log("UP");
+        setSnake(key);
         setKey("UP");
         break;
       case "ArrowLeft":
