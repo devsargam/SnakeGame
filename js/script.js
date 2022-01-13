@@ -1,3 +1,7 @@
+const randRange = (min, max) => {
+  return Math.floor(Math.random() * (max - min) + min);
+};
+
 class Board {
   constructor(rows, cols, selector) {
     this.rows = rows;
@@ -5,17 +9,25 @@ class Board {
     this.boxes = [];
     this.board = document.querySelector(selector);
     this.currHead = {
-      x: 5,
-      y: 5,
+      x: randRange(0, 29),
+      y: randRange(0, 29),
     };
     this.prevHead = {
       x: null,
       y: null,
     };
     this.dir = [0, 0];
+    this.len = 1;
   }
 
+  getRandomFood() {
+    this.food = {
+      x: randRange(0, 29),
+      y: randRange(0, 29),
+    };
+  }
   init() {
+    this.getRandomFood();
     for (let i = 0; i < this.rows; i++) {
       this.boxes[i] = [];
       for (let j = 0; j < this.cols; j++) {
@@ -23,6 +35,9 @@ class Board {
         div.classList.add("visible");
         if (this.currHead.x === i && this.currHead.y === j) {
           div.style.backgroundColor = "red";
+        }
+        if (this.food.x === i && this.food.y === j) {
+          div.style.backgroundColor = "blue";
         }
         this.board.appendChild(div);
         this.boxes[i].push(div);
@@ -38,8 +53,19 @@ class Board {
       this.currHead.x += xPos;
       this.currHead.y += yPos;
       // this.currHead.x += 1;
+      this.collision();
       this.update(loop);
     }, 1000 / 10);
+  }
+
+  collision() {
+    if (this.currHead.x === this.food.x && this.currHead.y === this.food.y) {
+      console.log("Collision");
+      this.getRandomFood();
+      this.boxes[this.food.x][this.food.y].style.backgroundColor = "blue";
+      this.len++;
+      console.log(this.len);
+    }
   }
 
   update() {
@@ -59,13 +85,11 @@ class Board {
       switch (key) {
         case "w":
         case "ArrowUp":
-          console.log("UP");
           this.dir = [-1, 0];
           this.update();
           break;
         case "ArrowLeft":
         case "a":
-          console.log("LEFT");
           this.dir = [0, -1];
           this.update();
 
@@ -73,12 +97,10 @@ class Board {
         case "ArrowDown":
         case "s":
           this.dir = [1, 0];
-          console.log("DOWN");
           this.update();
           break;
         case "ArrowRight":
         case "d":
-          console.log("RIGHT");
           this.dir = [0, 1];
           this.update();
           break;
