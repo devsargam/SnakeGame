@@ -3,11 +3,12 @@ const randRange = (min, max) => {
 };
 
 class Board {
-  constructor(rows, cols, selector) {
+  constructor(rows, cols, boardSelector, scoreSelector) {
     this.rows = rows;
     this.cols = cols;
     this.boxes = [];
-    this.board = document.querySelector(selector);
+    this.board = document.querySelector(boardSelector);
+    this.score = document.querySelector(scoreSelector);
     this.currHead = {
       x: randRange(0, 29),
       y: randRange(0, 29),
@@ -17,7 +18,7 @@ class Board {
       y: null,
     };
     this.dir = [0, 0];
-    this.len = 1;
+    this.len = 0;
   }
 
   getRandomFood() {
@@ -26,8 +27,10 @@ class Board {
       y: randRange(0, 29),
     };
   }
+
   init() {
     this.getRandomFood();
+    this.score.innerText = `Score: ${this.len}`;
     for (let i = 0; i < this.rows; i++) {
       this.boxes[i] = [];
       for (let j = 0; j < this.cols; j++) {
@@ -64,6 +67,7 @@ class Board {
       this.getRandomFood();
       this.boxes[this.food.x][this.food.y].style.backgroundColor = "blue";
       this.len++;
+      this.score.innerText = `Score: ${this.len}`;
       console.log(this.len);
     }
   }
@@ -109,7 +113,7 @@ class Board {
   }
 }
 
-const board = new Board(30, 30, "#board");
+const board = new Board(30, 30, "#board", "#score");
 board.init();
 board.move();
 board.input();
