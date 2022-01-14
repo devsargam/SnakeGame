@@ -55,7 +55,10 @@ class Board {
       this.prevHead.y = this.currHead.y;
       this.currHead.x += xPos;
       this.currHead.y += yPos;
-      // this.currHead.x += 1;
+      if (this.currHead.x > 29) this.currHead.x = 0;
+      if (this.currHead.x < 0) this.currHead.x = 29;
+      if (this.currHead.y > 29) this.currHead.y = 0;
+      if (this.currHead.y < 0) this.currHead.y = 29;
       this.collision();
       this.update(loop);
     }, 1000 / 10);
@@ -78,8 +81,9 @@ class Board {
         "pink";
       this.boxes[this.currHead.x][this.currHead.y].style.backgroundColor =
         "red";
-    } catch (error) {
-      console.log("Game Over bro");
+    } catch (e) {
+      console.log(e);
+      console.log(this.prevHead);
     }
   }
 
