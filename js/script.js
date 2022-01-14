@@ -13,10 +13,6 @@ class Board {
       x: randRange(0, 29),
       y: randRange(0, 29),
     };
-    this.prevHead = {
-      x: null,
-      y: null,
-    };
     this.dir = [0, 0];
     this.currDir = null;
     this.scoreNum = 0;
@@ -45,10 +41,6 @@ class Board {
         x: this.currHead.x,
         y: this.currHead.y,
       },
-      {
-        x: this.currHead.x + 1,
-        y: this.currHead.y,
-      },
     ];
     this.getRandomFood();
     this.score.innerText = `Score: ${this.scoreNum}`;
@@ -63,9 +55,6 @@ class Board {
             div.style.backgroundColor = this.snakeColor;
           }
         }
-        // if (this.snakeBody[0].x === i && this.snakeBody[0].y === j) {
-        // div.style.backgroundColor = this.snakeColor;
-        // }
         if (this.food.x === i && this.food.y === j) {
           div.style.backgroundColor = this.foodColor;
         }
@@ -78,10 +67,11 @@ class Board {
   move() {
     const loop = setInterval(() => {
       const [xPos, yPos] = this.dir;
-      this.prevHead.x = this.currHead.x;
-      this.prevHead.y = this.currHead.y;
       this.currHead.y += yPos;
       this.currHead.x += xPos;
+      if (xPos || yPos) {
+        this.selfCollision();
+      }
       if (this.currHead.x > this.rows - 1) this.currHead.x = 0;
       if (this.currHead.x < 0) this.currHead.x = this.rows - 1;
       if (this.currHead.y > this.cols - 1) this.currHead.y = 0;
@@ -94,11 +84,23 @@ class Board {
     }, 1000 / 10);
   }
 
+  selfCollision() {
+    const result = this.snakeBody.some(
+      (box) => box.x === this.currHead.x && box.y === this.currHead.y
+    );
+    if (result) {
+      console.log("Collisoin");
+    } else {
+      console.log("nope");
+    }
+  }
+
   collision() {
     if (this.currHead.x === this.food.x && this.currHead.y === this.food.y) {
       this.foodSound.play();
       this.getRandomFood();
-      this.boxes[this.food.x][this.food.y].style.backgroundColor = "blue";
+      this.boxes[this.food.x][this.food.y].style.backgroundColor =
+        this.foodColor;
       this.scoreNum++;
       this.score.innerText = `Score: ${this.scoreNum}`;
     } else {
@@ -118,7 +120,6 @@ class Board {
       );
     } catch (e) {
       console.log(e);
-      console.log(this.prevHead);
     }
   }
 
