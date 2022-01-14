@@ -18,7 +18,8 @@ class Board {
       y: null,
     };
     this.dir = [0, 0];
-    this.len = 0;
+    this.currDir = null;
+    this.scoreNum = 0;
   }
 
   getRandomFood() {
@@ -31,7 +32,6 @@ class Board {
         (box) => box.x === this.food.x && box.y === this.food.y
       )
     ) {
-      console.log("yes");
       this.getRandomFood();
     }
   }
@@ -44,7 +44,7 @@ class Board {
       },
     ];
     this.getRandomFood();
-    this.score.innerText = `Score: ${this.len}`;
+    this.score.innerText = `Score: ${this.scoreNum}`;
     for (let i = 0; i < this.rows; i++) {
       this.boxes[i] = [];
       for (let j = 0; j < this.cols; j++) {
@@ -52,9 +52,6 @@ class Board {
         div.classList.add("visible");
         if (this.snakeBody[0].x === i && this.snakeBody[0].y === j) {
           div.style.backgroundColor = "red";
-          // div.innerText = `${this.snakeBody[0].x},${this.snakeBody[0].y}`;
-          // div.style.fontSize = "11px";
-          console.log(this.snakeBody);
         }
         if (this.food.x === i && this.food.y === j) {
           div.style.backgroundColor = "blue";
@@ -86,13 +83,10 @@ class Board {
 
   collision() {
     if (this.currHead.x === this.food.x && this.currHead.y === this.food.y) {
-      console.log("Collision");
       this.getRandomFood();
       this.boxes[this.food.x][this.food.y].style.backgroundColor = "blue";
-      this.len++;
-      this.score.innerText = `Score: ${this.len}`;
-      console.log(this.len);
-      console.log(this.snakeBody);
+      this.scoreNum++;
+      this.score.innerText = `Score: ${this.scoreNum}`;
     } else {
       if (this.dir[0] || this.dir[1]) {
         this.removed = this.snakeBody.pop();
@@ -107,10 +101,6 @@ class Board {
       this.snakeBody.forEach(
         (box) => (this.boxes[box.x][box.y].style.backgroundColor = "red")
       );
-      // this.boxes[this.prevHead.x][this.prevHead.y].style.backgroundColor =
-      // "pink";
-      // this.boxes[this.currHead.x][this.currHead.y].style.backgroundColor =
-      // "red";
     } catch (e) {
       console.log(e);
       console.log(this.prevHead);
@@ -123,23 +113,31 @@ class Board {
       switch (key) {
         case "w":
         case "ArrowUp":
+          if (this.currDir === "DOWN") return;
           this.dir = [-1, 0];
+          this.currDir = "UP";
           this.update();
           break;
         case "ArrowLeft":
         case "a":
+          if (this.currDir === "RIGHT") return;
           this.dir = [0, -1];
+          this.currDir = "LEFT";
           this.update();
 
           break;
         case "ArrowDown":
         case "s":
+          if (this.currDir === "UP") return;
           this.dir = [1, 0];
+          this.currDir = "DOWN";
           this.update();
           break;
         case "ArrowRight":
         case "d":
+          if (this.currDir === "LEFT") return;
           this.dir = [0, 1];
+          this.currDir = "RIGHT";
           this.update();
           break;
       }
