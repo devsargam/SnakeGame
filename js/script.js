@@ -20,12 +20,15 @@ class Board {
     this.dir = [0, 0];
     this.currDir = null;
     this.scoreNum = 0;
+    this.snakeColor = "black";
+    this.foodColor = "red";
+    this.foodSound = new Audio("./assets/audio/food.mp3");
   }
 
   getRandomFood() {
     this.food = {
-      x: randRange(0, 29),
-      y: randRange(0, 29),
+      x: randRange(3, 26),
+      y: randRange(3, 26),
     };
     if (
       this.snakeBody.some(
@@ -42,6 +45,10 @@ class Board {
         x: this.currHead.x,
         y: this.currHead.y,
       },
+      {
+        x: this.currHead.x + 1,
+        y: this.currHead.y,
+      },
     ];
     this.getRandomFood();
     this.score.innerText = `Score: ${this.scoreNum}`;
@@ -50,11 +57,17 @@ class Board {
       for (let j = 0; j < this.cols; j++) {
         let div = document.createElement("div");
         div.classList.add("visible");
-        if (this.snakeBody[0].x === i && this.snakeBody[0].y === j) {
-          div.style.backgroundColor = "red";
+        for (const body of this.snakeBody) {
+          if (body.x === i && body.y === j) {
+            console.log(body);
+            div.style.backgroundColor = this.snakeColor;
+          }
         }
+        // if (this.snakeBody[0].x === i && this.snakeBody[0].y === j) {
+        // div.style.backgroundColor = this.snakeColor;
+        // }
         if (this.food.x === i && this.food.y === j) {
-          div.style.backgroundColor = "blue";
+          div.style.backgroundColor = this.foodColor;
         }
         this.board.appendChild(div);
         this.boxes[i].push(div);
@@ -83,6 +96,7 @@ class Board {
 
   collision() {
     if (this.currHead.x === this.food.x && this.currHead.y === this.food.y) {
+      this.foodSound.play();
       this.getRandomFood();
       this.boxes[this.food.x][this.food.y].style.backgroundColor = "blue";
       this.scoreNum++;
@@ -99,7 +113,8 @@ class Board {
   update() {
     try {
       this.snakeBody.forEach(
-        (box) => (this.boxes[box.x][box.y].style.backgroundColor = "red")
+        (box) =>
+          (this.boxes[box.x][box.y].style.backgroundColor = this.snakeColor)
       );
     } catch (e) {
       console.log(e);
