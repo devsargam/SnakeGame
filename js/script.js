@@ -19,6 +19,7 @@ class Board {
                       new Audio("./assets/audio/foodNoise1.mp3"),
                       new Audio("./assets/audio/foodNoise2.mp3")];
     this.soundOn = true;
+    this.audioButton = document.getElementById('audioButton');
 
     this.gameoverCooldown = false
 
@@ -181,14 +182,13 @@ class Board {
   }
 
   handleAudio() {
-    let audioButton = document.getElementById('audioButton');
-    audioButton.addEventListener('click', () => {
+    this.audioButton.addEventListener('click', () => {
     if(this.soundOn){
       this.soundOn = false
-      audioButton.src='./assets/pictures/audioOff.png'
+      this.audioButton.src='./assets/pictures/audioOff.png'
     }else{
       this.soundOn = true
-      audioButton.src='./assets/pictures/audioOn.png'
+      this.audioButton.src='./assets/pictures/audioOn.png'
     }})
   }
 
