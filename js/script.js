@@ -74,7 +74,6 @@ class Board {
     console.log('change in dif')
     console.log(this.difficultyValue)
     this.reset();
-    
   }
 
   updateScoreText() {
