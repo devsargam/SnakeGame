@@ -52,6 +52,22 @@ class Board {
     this.drawboard()
 
   }
+
+  updateScoreText() {
+    this.score.innerText = `Score: ${this.scoreNum} (Best: ${this.getBestScore()})`;
+  }
+
+  getBestScore() {
+    if (localStorage.getItem('best_score'))
+      return parseInt(localStorage.getItem('best_score'));
+    return 0;
+  }
+
+  checkBestScore() {
+    if (this.scoreNum > this.getBestScore())
+      localStorage.setItem('best_score', this.scoreNum.toString());
+  }
+
   getRandomFood() {
     this.food = {
       x: randRange(3, 26),
@@ -84,7 +100,7 @@ class Board {
     this.dir = [0, 0];
     this.currDir = null;
     this.scoreNum = 0;
-    this.score.innerText = `Score: ${this.scoreNum}`;
+    this.updateScoreText();
     this.gameover.innerText= "";
     this.playing = true;
   }
@@ -100,7 +116,7 @@ class Board {
     this.foodColor =  this.themes["pink"]["food"];
     this.bgcolor = this.themes["pink"]["bg"];
     this.getRandomFood();
-    this.score.innerText = `Score: ${this.scoreNum}`;
+    this.updateScoreText();
     for (let i = 0; i < this.rows; i++) {
       this.boxes[i] = [];
       for (let j = 0; j < this.cols; j++) {
@@ -171,7 +187,8 @@ class Board {
       this.boxes[this.food.x][this.food.y].style.backgroundColor =
         this.foodColor;
       this.scoreNum++;
-      this.score.innerText = `Score: ${this.scoreNum}`;
+      this.checkBestScore();
+      this.updateScoreText();
     } else {
       if (this.dir[0] || this.dir[1]) {
         this.removed = this.snakeBody.pop();
