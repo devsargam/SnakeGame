@@ -9,9 +9,11 @@
 ```bash
 git clone https://github.com/devsargam/SnakeGame.git
 cd SnakeGame
-yarne
+yarn
 yarn start
 ```
+
+This game works by creating dynamically creating and updating color of divs in a grid which simulates a snake moment and food.
 
 ### Feel free to contribute to this project by forking this project
 
