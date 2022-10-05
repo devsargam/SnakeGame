@@ -11,15 +11,47 @@ class Board {
     this.board = document.querySelector(boardSelector);
     this.gameover = document.querySelector(gameoverSelector);
     this.score = document.querySelector(scoreSelector);
+    this.themeselect = document.querySelector("#theme")
     this.reset()
-    this.snakeColor = "black";
-    this.foodColor = "red";
     this.foodSounds = [new Audio("./assets/audio/foodNoise0.mp3"),
                       new Audio("./assets/audio/foodNoise1.mp3"),
                       new Audio("./assets/audio/foodNoise2.mp3")];
     this.gameoverCooldown = false
+
+    this.themes = {
+      "pink":{
+        "bg": "pink",
+        "food": "red",
+        "snake": "black"
+      },
+      "classic":{
+        "bg": "#33cc33",
+        "food": "#8c8c8c",
+        "snake": "black"
+      },
+      "dracula":{
+        "bg": "#282a36",
+        "food": "#6272a4",
+        "snake": "#f8f8f2"
+      }
+    }
+    Object.keys(this.themes).forEach(theme => {
+      var opt = document.createElement('option');
+      opt.value = theme
+      opt.innerHTML = theme
+      this.themeselect.appendChild(opt)
+    });
+    this.themeselect.addEventListener("change", this.selectTheme)
   }
 
+  selectTheme = (e) => {//defined as an arrow function because the scope will channge otherwise, preventing access to `this`
+    const theme = e.target.options[e.target.selectedIndex].text
+    this.bgcolor = this.themes[theme]['bg']
+    this.snakeColor = this.themes[theme]['snake']
+    this.foodColor = this.themes[theme]['food']
+    this.drawboard()
+
+  }
   getRandomFood() {
     this.food = {
       x: randRange(3, 26),
@@ -38,8 +70,7 @@ class Board {
     
     this.snakeBody?.forEach(//reset the color of the old snake's squares
       (box) =>
-        (this.boxes[box.x][box.y].style.backgroundColor = "pink")
-    );
+        (this.boxes[box.x][box.y].style.backgroundColor = this.bgcolor));
     this.currHead = {//reset head
       x: randRange(0, 29),
       y: randRange(0, 29),
@@ -65,6 +96,9 @@ class Board {
         y: this.currHead.y,
       },
     ];
+    this.snakeColor = this.themes["pink"]["snake"];
+    this.foodColor =  this.themes["pink"]["food"];
+    this.bgcolor = this.themes["pink"]["bg"];
     this.getRandomFood();
     this.score.innerText = `Score: ${this.scoreNum}`;
     for (let i = 0; i < this.rows; i++) {
@@ -72,21 +106,25 @@ class Board {
       for (let j = 0; j < this.cols; j++) {
         let div = document.createElement("div");
         div.classList.add("visible");
-        for (const body of this.snakeBody) {
-          if (body.x === i && body.y === j) {
-            console.log(body);
-            div.style.backgroundColor = this.snakeColor;
-          }
-        }
-        if (this.food.x === i && this.food.y === j) {
-          div.style.backgroundColor = this.foodColor;
-        }
         this.board.appendChild(div);
         this.boxes[i].push(div);
       }
     }
+    this.drawboard()
   }
 
+  drawboard(){
+    this.boxes.forEach(boxrow => {
+      boxrow.forEach(box => {
+        box.style.backgroundColor = this.bgcolor;
+      });
+    });
+    this.snakeBody?.forEach(//reset the color of the old snake's squares
+    (box) =>
+      (this.boxes[box.x][box.y].style.backgroundColor = this.snakeColor));
+    
+      this.boxes[this.food.x][this.food.y].style.backgroundColor = this.foodColor
+  }
   move() {
     const loop = setInterval(() => {//store loop in class so we can clear it later
       const [xPos, yPos] = this.dir;
@@ -138,7 +176,7 @@ class Board {
       if (this.dir[0] || this.dir[1]) {
         this.removed = this.snakeBody.pop();
         this.boxes[this.removed.x][this.removed.y].style.backgroundColor =
-          "pink";
+          this.bgcolor;
       }
     }
   }
