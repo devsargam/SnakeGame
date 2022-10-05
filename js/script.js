@@ -18,7 +18,9 @@ class Board {
     this.scoreNum = 0;
     this.snakeColor = "black";
     this.foodColor = "red";
-    this.foodSound = new Audio("./assets/audio/food.mp3");
+    this.foodSounds = [new Audio("./assets/audio/foodNoise0.mp3"),
+                      new Audio("./assets/audio/foodNoise1.mp3"),
+                      new Audio("./assets/audio/foodNoise2.mp3")];
   }
 
   getRandomFood() {
@@ -95,9 +97,13 @@ class Board {
     }
   }
 
+  playRandomSound() {
+    this.foodSounds[Math.floor(Math.random() * this.foodSounds.length)].play();
+  }
+
   collision() {
     if (this.currHead.x === this.food.x && this.currHead.y === this.food.y) {
-      this.foodSound.play();
+      this.playRandomSound();
       this.getRandomFood();
       this.boxes[this.food.x][this.food.y].style.backgroundColor =
         this.foodColor;
