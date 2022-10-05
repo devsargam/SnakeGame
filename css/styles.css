@@ -36,3 +36,11 @@
   grid-template-rows: repeat(var(--row));
   border: 5px solid whitesmoke;
 }
+
+#audioButton {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  height: 7rem;
+  width: 7rem;
+}

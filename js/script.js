@@ -21,6 +21,7 @@ class Board {
     this.foodSounds = [new Audio("./assets/audio/foodNoise0.mp3"),
                       new Audio("./assets/audio/foodNoise1.mp3"),
                       new Audio("./assets/audio/foodNoise2.mp3")];
+    this.soundOn = true;
   }
 
   getRandomFood() {
@@ -98,7 +99,9 @@ class Board {
   }
 
   playRandomSound() {
-    this.foodSounds[Math.floor(Math.random() * this.foodSounds.length)].play();
+    if(this.soundOn){
+      this.foodSounds[Math.floor(Math.random() * this.foodSounds.length)].play();
+    }
   }
 
   collision() {
@@ -171,3 +174,14 @@ const board = new Board(30, 30, "#board", "#score");
 board.init();
 board.move();
 board.input();
+
+let audioButton = document.getElementById('audioButton');
+audioButton.addEventListener('click', function(e) {
+  if(board.soundOn){
+    board.soundOn = false
+    audioButton.src='./assets/pictures/audioOff.png'
+  }else{
+    board.soundOn = true
+    audioButton.src='./assets/pictures/audioOn.png'
+  }
+})
