@@ -18,3 +18,7 @@ This game works by creating dynamically creating and updating color of divs in a
 ### Feel free to contribute to this project by forking this project
 
 ### Don't forget to leave a star ⭐
+
+### Screenshoot :
+![05-10-2022](https://user-images.githubusercontent.com/37242269/193979670-c53382b5-4abb-4682-8893-5ea0380fe227.PNG)
+
