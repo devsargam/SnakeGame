@@ -13,9 +13,14 @@ class Board {
     this.score = document.querySelector(scoreSelector);
     this.themeselect = document.querySelector("#theme")
     this.reset()
+
+    // Sound section
     this.foodSounds = [new Audio("./assets/audio/foodNoise0.mp3"),
                       new Audio("./assets/audio/foodNoise1.mp3"),
                       new Audio("./assets/audio/foodNoise2.mp3")];
+    this.soundOn = true;
+    this.audioButton = document.getElementById('audioButton');
+
     this.gameoverCooldown = false
 
     this.themes = {
@@ -176,8 +181,21 @@ class Board {
     }
   }
 
+  handleAudio() {
+    this.audioButton.addEventListener('click', () => {
+    if(this.soundOn){
+      this.soundOn = false
+      this.audioButton.src='./assets/pictures/audioOff.png'
+    }else{
+      this.soundOn = true
+      this.audioButton.src='./assets/pictures/audioOn.png'
+    }})
+  }
+
   playRandomSound() {
-    this.foodSounds[Math.floor(Math.random() * this.foodSounds.length)].play();
+    if(this.soundOn){
+      this.foodSounds[Math.floor(Math.random() * this.foodSounds.length)].play();
+    }
   }
 
   collision() {
@@ -260,3 +278,4 @@ const board = new Board(30, 30, "#board", "#score", "#gameover");
 board.init();
 board.move();
 board.input();
+board.handleAudio();
