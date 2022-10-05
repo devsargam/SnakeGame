@@ -3,24 +3,21 @@ const randRange = (min, max) => {
 };
 
 class Board {
-  constructor(rows, cols, boardSelector, scoreSelector) {
+
+  constructor(rows, cols, boardSelector, scoreSelector, gameoverSelector) {
     this.rows = rows;
     this.cols = cols;
     this.boxes = [];
     this.board = document.querySelector(boardSelector);
+    this.gameover = document.querySelector(gameoverSelector);
     this.score = document.querySelector(scoreSelector);
-    this.currHead = {
-      x: randRange(0, 29),
-      y: randRange(0, 29),
-    };
-    this.dir = [0, 0];
-    this.currDir = null;
-    this.scoreNum = 0;
+    this.reset()
     this.snakeColor = "black";
     this.foodColor = "red";
     this.foodSounds = [new Audio("./assets/audio/foodNoise0.mp3"),
                       new Audio("./assets/audio/foodNoise1.mp3"),
                       new Audio("./assets/audio/foodNoise2.mp3")];
+    this.gameoverCooldown = false
   }
 
   getRandomFood() {
@@ -37,6 +34,30 @@ class Board {
     }
   }
 
+  reset(){//reset the board for a new game
+    
+    this.snakeBody?.forEach(//reset the color of the old snake's squares
+      (box) =>
+        (this.boxes[box.x][box.y].style.backgroundColor = "pink")
+    );
+    this.currHead = {//reset head
+      x: randRange(0, 29),
+      y: randRange(0, 29),
+    };
+    this.snakeBody = [//reset snake body
+      {
+        x: this.currHead.x,
+        y: this.currHead.y,
+      },
+    ];
+    this.dir = [0, 0];
+    this.currDir = null;
+    this.scoreNum = 0;
+    this.score.innerText = `Score: ${this.scoreNum}`;
+    this.gameover.innerText= "";
+    this.playing = true;
+  }
+ 
   init() {
     this.snakeBody = [
       {
@@ -67,7 +88,7 @@ class Board {
   }
 
   move() {
-    const loop = setInterval(() => {
+    const loop = setInterval(() => {//store loop in class so we can clear it later
       const [xPos, yPos] = this.dir;
       this.currHead.y += yPos;
       this.currHead.x += xPos;
@@ -92,6 +113,10 @@ class Board {
     );
     if (result) {
       console.log("Collisoin");
+      this.playing = false;
+      this.gameover.innerText = `Game Over! Press any key to start a new game.`;
+      this.gameoverCooldown = true;
+      setInterval(() => this.gameoverCooldown = false, 1000)//set gameoverCooldown to true for 1s, to avoid accidental restarts
     } else {
       console.log("nope");
     }
@@ -118,8 +143,12 @@ class Board {
     }
   }
 
-  update() {
+  update(loop) {
     try {
+      if(!this.playing){//it's game over!
+        clearInterval(loop);
+        return
+      }
       this.snakeBody.forEach(
         (box) =>
           (this.boxes[box.x][box.y].style.backgroundColor = this.snakeColor)
@@ -132,6 +161,11 @@ class Board {
   input() {
     window.addEventListener("keydown", (e) => {
       const key = e.key;
+      if(!this.playing && !this.gameoverCooldown)//restart the game on key press
+      {
+        this.reset()
+        this.move()
+      }
       switch (key) {
         case "w":
         case "ArrowUp":
@@ -167,7 +201,7 @@ class Board {
   }
 }
 
-const board = new Board(30, 30, "#board", "#score");
+const board = new Board(30, 30, "#board", "#score", "#gameover");
 board.init();
 board.move();
 board.input();
