@@ -13,10 +13,22 @@ class Board {
     this.score = document.querySelector(scoreSelector);
     this.themeselect = document.querySelector("#theme")
     this.reset()
+
+    // Sound section
     this.foodSounds = [new Audio("./assets/audio/foodNoise0.mp3"),
                       new Audio("./assets/audio/foodNoise1.mp3"),
                       new Audio("./assets/audio/foodNoise2.mp3")];
     this.soundOn = true;
+    let audioButton = document.getElementById('audioButton');
+    audioButton.addEventListener('click', () => {
+    if(this.soundOn){
+      this.soundOn = false
+      audioButton.src='./assets/pictures/audioOff.png'
+    }else{
+      this.soundOn = true
+      audioButton.src='./assets/pictures/audioOn.png'
+    }})
+
     this.gameoverCooldown = false
 
     this.themes = {
@@ -263,14 +275,3 @@ const board = new Board(30, 30, "#board", "#score", "#gameover");
 board.init();
 board.move();
 board.input();
-
-let audioButton = document.getElementById('audioButton');
-audioButton.addEventListener('click', function(e) {
-  if(board.soundOn){
-    board.soundOn = false
-    audioButton.src='./assets/pictures/audioOff.png'
-  }else{
-    board.soundOn = true
-    audioButton.src='./assets/pictures/audioOn.png'
-  }
-})
