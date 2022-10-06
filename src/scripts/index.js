@@ -79,9 +79,9 @@ class Board {
   selectDifficulty = (e) => {
     const difficulty = e.target.options[e.target.selectedIndex].text;
     this.difficultyValue = this.difficultyDic[difficulty];
-    console.log("change in dif");
     console.log(this.difficultyValue);
-    this.reset();
+    this.playing = false;
+    this.update();
   };
 
   updateScoreText() {
@@ -180,7 +180,7 @@ class Board {
 
     this.boxes[this.food.x][this.food.y].style.backgroundColor = this.foodColor;
   }
-  move() {
+  move= () => {
     const loop = setInterval(() => {
       //store loop in class so we can clear it later
       this.changedDirection = false;
@@ -212,8 +212,6 @@ class Board {
       this.gameover.innerText = `Game Over! Press any key to start a new game.`;
       this.gameoverCooldown = true;
       setInterval(() => (this.gameoverCooldown = false), 1000); //set gameoverCooldown to true for 1s, to avoid accidental restarts
-    } else {
-      console.log("nope");
     }
   }
 
