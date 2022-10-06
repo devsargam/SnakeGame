@@ -13,15 +13,22 @@
       <h1 id="gameover"></h1>
       <h1 id="score"></h1>
       <div id="board"></div>
-      <div>
+      <div class="option">
         Select theme:
         <select id="theme"></select>
       </div>
-      <div>
+      <div class="option">
         Select Difficulty:
         <select id="difficulty"></select>
       </div>
+      <div class="option info">press escape to pause</div>
       <img id="audioButton" />
+    </div>
+    <div id="overlay">
+      <div class="overlay__container">
+        <h1>Paused the game</h1>
+        <button id="resumeButton">Resume</button>
+      </div>
     </div>
   </body>
   <script type="module" src="./scripts/index.js"></script>

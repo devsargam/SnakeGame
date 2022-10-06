@@ -18,7 +18,11 @@ class Board {
     this.score = document.querySelector(scoreSelector);
     this.themeselect = document.querySelector("#theme");
     this.difficultySelect = document.querySelector("#difficulty");
-    this.difficultyDic = { easy: 1000 / 5, medium: 1000 / 8, hard: 1000 / 10 };
+    this.difficultyDic = {
+      easy: 1000 / 5,
+      medium: 1000 / 8,
+      hard: 1000 / 10,
+    };
     this.difficultyValue = this.difficultyDic["easy"];
     this.reset();
     // Sound section
@@ -29,6 +33,11 @@ class Board {
     ];
     this.soundOn = true;
     this.audioButton = document.getElementById("audioButton");
+
+    this.overlay = document.querySelector("#overlay");
+    this.resumeButton = document.querySelector("#resumeButton");
+    this.paused = false;
+
     this.audioButton.src = audioOnImg;
     this.gameoverCooldown = false;
 
@@ -65,7 +74,6 @@ class Board {
     });
     this.difficultySelect.addEventListener("change", this.selectDifficulty);
   }
-
   selectTheme = (e) => {
     //defined as an arrow function because the scope will channge otherwise, preventing access to `this`
     const theme = e.target.options[e.target.selectedIndex].text;
@@ -193,7 +201,10 @@ class Board {
       if (this.currHead.y > this.cols - 1) this.currHead.y = 0;
       if (this.currHead.y < 0) this.currHead.y = this.cols - 1;
       if (xPos || yPos) {
-        this.snakeBody.unshift({ x: this.currHead.x, y: this.currHead.y });
+        this.snakeBody.unshift({
+          x: this.currHead.x,
+          y: this.currHead.y,
+        });
       }
       this.collision();
       this.update(loop);
@@ -235,6 +246,25 @@ class Board {
     }
   }
 
+  toggleOverlay() {
+    this.overlay.classList.toggle("visible");
+  }
+
+  pauseGame() {
+    console.log("pause");
+    this.toggleOverlay();
+    this.playing = false;
+    this.paused = true;
+  }
+
+  resumeGame() {
+    console.log("resume");
+    this.toggleOverlay();
+    this.playing = true;
+    this.paused = false;
+    this.move();
+  }
+
   collision() {
     if (this.currHead.x === this.food.x && this.currHead.y === this.food.y) {
       this.playRandomSound();
@@ -258,6 +288,13 @@ class Board {
       if (!this.playing) {
         //it's game over!
         clearInterval(loop);
+
+        if (this.paused) {
+          this.snakeBody.forEach(
+            (box) =>
+              (this.boxes[box.x][box.y].style.backgroundColor = this.snakeColor)
+          );
+        }
         return;
       }
       this.snakeBody.forEach(
@@ -272,7 +309,7 @@ class Board {
   input() {
     window.addEventListener("keydown", (e) => {
       const key = e.key;
-      if (!this.playing && !this.gameoverCooldown) {
+      if (!this.playing && !this.gameoverCooldown && !this.paused) {
         //restart the game on key press
         this.reset();
         this.move();
@@ -307,7 +344,17 @@ class Board {
           this.currDir = "RIGHT";
           this.update();
           break;
+        case "Escape":
+          if (this.playing) {
+            this.pauseGame();
+          } else {
+            this.resumeGame();
+          }
+          break;
       }
+    });
+    this.resumeButton.addEventListener("click", () => {
+      this.resumeGame();
     });
   }
 }
