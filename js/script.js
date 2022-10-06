@@ -5,6 +5,61 @@ const randRange = (min, max) => {
 class Board {
 
   constructor(rows, cols, boardSelector, scoreSelector, gameoverSelector) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     this.rows = rows;
     this.cols = cols;
     this.boxes = [];
