@@ -3,6 +3,7 @@ const randRange = (min, max) => {
 };
 
 class Board {
+
   constructor(rows, cols, boardSelector, scoreSelector, gameoverSelector) {
     this.rows = rows;
     this.cols = cols;
@@ -10,89 +11,84 @@ class Board {
     this.board = document.querySelector(boardSelector);
     this.gameover = document.querySelector(gameoverSelector);
     this.score = document.querySelector(scoreSelector);
-    this.themeselect = document.querySelector("#theme");
-    this.difficultySelect = document.querySelector("#difficulty");
-    this.difficultyDic = { easy: 1000 / 5, medium: 1000 / 8, hard: 1000 / 10 };
-    this.difficultyValue = this.difficultyDic["easy"];
-    this.reset();
+    this.themeselect = document.querySelector("#theme")
+    this.difficultySelect = document.querySelector("#difficulty")
+    this.difficultyDic = {"easy": 1000/5, "medium": 1000/8, "hard": 1000/10};
+    this.difficultyValue = this.difficultyDic["easy"]
+    this.reset()
 
     // Sound section
-    this.foodSounds = [
-      new Audio("./assets/audio/foodNoise0.mp3"),
-      new Audio("./assets/audio/foodNoise1.mp3"),
-      new Audio("./assets/audio/foodNoise2.mp3"),
-    ];
+    this.foodSounds = [new Audio("./assets/audio/foodNoise0.mp3"),
+                      new Audio("./assets/audio/foodNoise1.mp3"),
+                      new Audio("./assets/audio/foodNoise2.mp3")];
     this.soundOn = true;
-    this.audioButton = document.getElementById("audioButton");
+    this.audioButton = document.getElementById('audioButton');
 
-    this.gameoverCooldown = false;
+    this.gameoverCooldown = false
 
     this.themes = {
-      pink: {
-        bg: "pink",
-        food: "red",
-        snake: "black",
+      "pink":{
+        "bg": "pink",
+        "food": "red",
+        "snake": "black"
       },
-      classic: {
-        bg: "#33cc33",
-        food: "#8c8c8c",
-        snake: "black",
+      "classic":{
+        "bg": "#33cc33",
+        "food": "#8c8c8c",
+        "snake": "black"
       },
-      dracula: {
-        bg: "#282a36",
-        food: "#6272a4",
-        snake: "#f8f8f2",
-      },
-    };
-    Object.keys(this.themes).forEach((theme) => {
-      var opt = document.createElement("option");
-      opt.value = theme;
-      opt.innerHTML = theme;
-      this.themeselect.appendChild(opt);
+      "dracula":{
+        "bg": "#282a36",
+        "food": "#6272a4",
+        "snake": "#f8f8f2"
+      }
+    }
+    Object.keys(this.themes).forEach(theme => {
+      var opt = document.createElement('option');
+      opt.value = theme
+      opt.innerHTML = theme
+      this.themeselect.appendChild(opt)
     });
-    this.themeselect.addEventListener("change", this.selectTheme);
+    this.themeselect.addEventListener("change", this.selectTheme)
 
-    Object.keys(this.difficultyDic).forEach((difficulty) => {
-      var opt = document.createElement("option");
-      opt.value = difficulty;
-      opt.innerHTML = difficulty;
-      this.difficultySelect.appendChild(opt);
+    Object.keys(this.difficultyDic).forEach(difficulty => {
+      var opt = document.createElement('option');
+      opt.value = difficulty
+      opt.innerHTML = difficulty
+      this.difficultySelect.appendChild(opt)
     });
-    this.difficultySelect.addEventListener("change", this.selectDifficulty);
+    this.difficultySelect.addEventListener("change", this.selectDifficulty)
   }
 
-  selectTheme = (e) => {
-    //defined as an arrow function because the scope will channge otherwise, preventing access to `this`
-    const theme = e.target.options[e.target.selectedIndex].text;
-    this.bgcolor = this.themes[theme]["bg"];
-    this.snakeColor = this.themes[theme]["snake"];
-    this.foodColor = this.themes[theme]["food"];
-    this.drawboard();
-  };
+  selectTheme = (e) => {//defined as an arrow function because the scope will channge otherwise, preventing access to `this`
+    const theme = e.target.options[e.target.selectedIndex].text
+    this.bgcolor = this.themes[theme]['bg']
+    this.snakeColor = this.themes[theme]['snake']
+    this.foodColor = this.themes[theme]['food']
+    this.drawboard()
+  }
 
   selectDifficulty = (e) => {
-    const difficulty = e.target.options[e.target.selectedIndex].text;
-    this.difficultyValue = this.difficultyDic[difficulty];
-    console.log("change in dif");
-    console.log(this.difficultyValue);
+    const difficulty = e.target.options[e.target.selectedIndex].text
+    this.difficultyValue = this.difficultyDic[difficulty]
+    console.log('change in dif')
+    console.log(this.difficultyValue)
     this.reset();
-  };
+  }
 
   updateScoreText() {
-    this.score.innerText = `Score: ${
-      this.scoreNum
-    } (Best: ${this.getBestScore()})`;
+    this.score.innerText = `Score: ${this.scoreNum} (Best: ${this.getBestScore()})`;
   }
 
   getBestScore() {
-    if (localStorage.getItem("best_score"))
-      return parseInt(localStorage.getItem("best_score"));
+    if (localStorage.getItem('best_score'))
+      return parseInt(localStorage.getItem('best_score'));
     return 0;
   }
 
   checkBestScore() {
     if (this.scoreNum > this.getBestScore())
-      localStorage.setItem("best_score", this.scoreNum.toString());
+      localStorage.setItem('best_score', this.scoreNum.toString());
   }
 
   getRandomFood() {
@@ -109,20 +105,16 @@ class Board {
     }
   }
 
-  reset() {
-    //reset the board for a new game
-
-    this.snakeBody?.forEach(
-      //reset the color of the old snake's squares
-      (box) => (this.boxes[box.x][box.y].style.backgroundColor = this.bgcolor)
-    );
-    this.currHead = {
-      //reset head
+  reset(){//reset the board for a new game
+    
+    this.snakeBody?.forEach(//reset the color of the old snake's squares
+      (box) =>
+        (this.boxes[box.x][box.y].style.backgroundColor = this.bgcolor));
+    this.currHead = {//reset head
       x: randRange(0, 29),
       y: randRange(0, 29),
     };
-    this.snakeBody = [
-      //reset snake body
+    this.snakeBody = [//reset snake body
       {
         x: this.currHead.x,
         y: this.currHead.y,
@@ -132,10 +124,10 @@ class Board {
     this.currDir = null;
     this.scoreNum = 0;
     this.updateScoreText();
-    this.gameover.innerText = "";
+    this.gameover.innerText= "";
     this.playing = true;
   }
-
+ 
   init() {
     this.snakeBody = [
       {
@@ -144,7 +136,7 @@ class Board {
       },
     ];
     this.snakeColor = this.themes["pink"]["snake"];
-    this.foodColor = this.themes["pink"]["food"];
+    this.foodColor =  this.themes["pink"]["food"];
     this.bgcolor = this.themes["pink"]["bg"];
     this.getRandomFood();
     this.updateScoreText();
@@ -157,26 +149,23 @@ class Board {
         this.boxes[i].push(div);
       }
     }
-    this.drawboard();
+    this.drawboard()
   }
 
-  drawboard() {
-    this.boxes.forEach((boxrow) => {
-      boxrow.forEach((box) => {
+  drawboard(){
+    this.boxes.forEach(boxrow => {
+      boxrow.forEach(box => {
         box.style.backgroundColor = this.bgcolor;
       });
     });
-    this.snakeBody?.forEach(
-      //reset the color of the old snake's squares
-      (box) =>
-        (this.boxes[box.x][box.y].style.backgroundColor = this.snakeColor)
-    );
-
-    this.boxes[this.food.x][this.food.y].style.backgroundColor = this.foodColor;
+    this.snakeBody?.forEach(//reset the color of the old snake's squares
+    (box) =>
+      (this.boxes[box.x][box.y].style.backgroundColor = this.snakeColor));
+    
+      this.boxes[this.food.x][this.food.y].style.backgroundColor = this.foodColor
   }
   move() {
-    const loop = setInterval(() => {
-      //store loop in class so we can clear it later
+    const loop = setInterval(() => {//store loop in class so we can clear it later
       const [xPos, yPos] = this.dir;
       this.currHead.y += yPos;
       this.currHead.x += xPos;
@@ -204,29 +193,26 @@ class Board {
       this.playing = false;
       this.gameover.innerText = `Game Over! Press any key to start a new game.`;
       this.gameoverCooldown = true;
-      setInterval(() => (this.gameoverCooldown = false), 1000); //set gameoverCooldown to true for 1s, to avoid accidental restarts
+      setInterval(() => this.gameoverCooldown = false, 1000)//set gameoverCooldown to true for 1s, to avoid accidental restarts
     } else {
       console.log("nope");
     }
   }
 
   handleAudio() {
-    this.audioButton.addEventListener("click", () => {
-      if (this.soundOn) {
-        this.soundOn = false;
-        this.audioButton.src = "./assets/pictures/audioOff.png";
-      } else {
-        this.soundOn = true;
-        this.audioButton.src = "./assets/pictures/audioOn.png";
-      }
-    });
+    this.audioButton.addEventListener('click', () => {
+    if(this.soundOn){
+      this.soundOn = false
+      this.audioButton.src='./assets/pictures/audioOff.png'
+    }else{
+      this.soundOn = true
+      this.audioButton.src='./assets/pictures/audioOn.png'
+    }})
   }
 
   playRandomSound() {
-    if (this.soundOn) {
-      this.foodSounds[
-        Math.floor(Math.random() * this.foodSounds.length)
-      ].play();
+    if(this.soundOn){
+      this.foodSounds[Math.floor(Math.random() * this.foodSounds.length)].play();
     }
   }
 
@@ -250,10 +236,9 @@ class Board {
 
   update(loop) {
     try {
-      if (!this.playing) {
-        //it's game over!
+      if(!this.playing){//it's game over!
         clearInterval(loop);
-        return;
+        return
       }
       this.snakeBody.forEach(
         (box) =>
@@ -267,10 +252,10 @@ class Board {
   input() {
     window.addEventListener("keydown", (e) => {
       const key = e.key;
-      if (!this.playing && !this.gameoverCooldown) {
-        //restart the game on key press
-        this.reset();
-        this.move();
+      if(!this.playing && !this.gameoverCooldown)//restart the game on key press
+      {
+        this.reset()
+        this.move()
       }
       switch (key) {
         case "w":
