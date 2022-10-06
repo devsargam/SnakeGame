@@ -2,10 +2,10 @@
   "name": "snakegame",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "vite .",
-    "build": "vite build",
+    "start": "vite src/",
+    "build": "vite src/ build .",
     "preview": "vite preview"
   },
   "repository": {
