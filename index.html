@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="#" type="image/x-icon" />
-    <title>Snake Game</title>
-    <link rel="stylesheet" href="css/styles.css" />
-  </head>
-  <body>
-    <div class="root">
-      <h1 id="gameover"></h1>
-      <h1 id="score"></h1>
-      <div id="board"></div>
-      <div>Select theme:  <select id="theme">
-      </select></div>
-      <div>Select Difficulty:  <select id="difficulty">
-      </select></div>
-      <img id="audioButton" src="./assets/pictures/audioOn.png">
-    </div>
-  </body>
-  <script src="js/script.js"></script>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="#" type="image/x-icon" />
+        <title>Snake Game</title>
+        <link rel="stylesheet" href="css/styles.css" />
+    </head>
+    <body>
+        <div class="root">
+            <h1 id="gameover"></h1>
+            <h1 id="score"></h1>
+            <div id="board"></div>
+            <div class="option">
+                Select theme:
+                <select id="theme"></select>
+            </div>
+            <div class="option">
+                Select Difficulty:
+                <select id="difficulty"></select>
+            </div>
+            <div class="option info">press escape to pause</div>
+            <img id="audioButton" src="./assets/pictures/audioOn.png" />
+        </div>
+        <div id="overlay">
+            <div class="overlay__container">
+                <h1>Paused the game</h1>
+                <button id="resumeButton">Resume</button>
+            </div>
+        </div>
+    </body>
+    <script src="js/script.js"></script>
 </html>
