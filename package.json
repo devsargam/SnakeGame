@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "vite ."
+    "start": "vite .",
     "prepare": "husky install",
     "format": "prettier --write src/ && git add ."
   },
