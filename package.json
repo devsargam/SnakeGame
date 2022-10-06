@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "vite .",
-    "prepare": "husky install",
-    "format": "prettier --write src/ && git add ."
+    "start": "vite ."
   },
   "repository": {
     "type": "git",
@@ -21,9 +19,5 @@
   "homepage": "https://github.com/sargam-poudel/SnakeGame#readme",
   "dependencies": {
     "vite": "^2.9.13"
-  },
-  "devDependencies": {
-    "husky": "^8.0.1",
-    "prettier": "^2.7.1"
   }
 }
