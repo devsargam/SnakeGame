@@ -40,6 +40,7 @@ class Board {
 
     this.audioButton.src = audioOnImg;
     this.gameoverCooldown = false;
+    this.changedDirection = false;
 
     this.themes = {
       pink: {
@@ -86,8 +87,9 @@ class Board {
   selectDifficulty = (e) => {
     const difficulty = e.target.options[e.target.selectedIndex].text;
     this.difficultyValue = this.difficultyDic[difficulty];
-    console.log("change in dif");
     console.log(this.difficultyValue);
+    this.playing = false;
+    this.update();
     this.reset();
   };
 
@@ -187,9 +189,10 @@ class Board {
 
     this.boxes[this.food.x][this.food.y].style.backgroundColor = this.foodColor;
   }
-  move() {
+  move= () => {
     const loop = setInterval(() => {
       //store loop in class so we can clear it later
+      this.changedDirection = false;
       const [xPos, yPos] = this.dir;
       this.currHead.y += yPos;
       this.currHead.x += xPos;
@@ -221,8 +224,6 @@ class Board {
       this.gameover.innerText = `Game Over! Press any key to start a new game.`;
       this.gameoverCooldown = true;
       setInterval(() => (this.gameoverCooldown = false), 1000); //set gameoverCooldown to true for 1s, to avoid accidental restarts
-    } else {
-      console.log("nope");
     }
   }
 
@@ -317,14 +318,16 @@ class Board {
       switch (key) {
         case "w":
         case "ArrowUp":
-          if (this.currDir === "DOWN") return;
+          if (this.currDir === "DOWN" || this.changedDirection) return;
+          this.changedDirection = true;
           this.dir = [-1, 0];
           this.currDir = "UP";
           this.update();
           break;
         case "ArrowLeft":
         case "a":
-          if (this.currDir === "RIGHT") return;
+          if (this.currDir === "RIGHT" || this.changedDirection) return;
+          this.changedDirection = true;
           this.dir = [0, -1];
           this.currDir = "LEFT";
           this.update();
@@ -332,14 +335,16 @@ class Board {
           break;
         case "ArrowDown":
         case "s":
-          if (this.currDir === "UP") return;
+          if (this.currDir === "UP" || this.changedDirection) return;
+          this.changedDirection = true;
           this.dir = [1, 0];
           this.currDir = "DOWN";
           this.update();
           break;
         case "ArrowRight":
         case "d":
-          if (this.currDir === "LEFT") return;
+          if (this.currDir === "LEFT" || this.changedDirection) return;
+          this.changedDirection = true;
           this.dir = [0, 1];
           this.currDir = "RIGHT";
           this.update();
