@@ -295,6 +295,14 @@ class Board {
             if (!this.playing) {
                 //it's game over!
                 clearInterval(loop);
+
+                if (this.paused) {
+                    this.snakeBody.forEach(
+                        (box) =>
+                            (this.boxes[box.x][box.y].style.backgroundColor =
+                                this.snakeColor)
+                    );
+                }
                 return;
             }
             this.snakeBody.forEach(
