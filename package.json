@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "vite ."
+    "start": "vite .",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "repository": {
     "type": "git",

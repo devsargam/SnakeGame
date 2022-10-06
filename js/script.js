@@ -1,3 +1,9 @@
+import foodNoise0 from "../assets/audio/foodNoise0.mp3";
+import foodNoise1 from "../assets/audio/foodNoise1.mp3";
+import foodNoise2 from "../assets/audio/foodNoise2.mp3";
+import audioOn from "../assets/pictures/audioOn.png";
+import audioOff from "../assets/pictures/audioOff.png";
+
 const randRange = (min, max) => {
     return Math.floor(Math.random() * (max - min) + min);
 };
@@ -22,9 +28,9 @@ class Board {
 
         // Sound section
         this.foodSounds = [
-            new Audio("./assets/audio/foodNoise0.mp3"),
-            new Audio("./assets/audio/foodNoise1.mp3"),
-            new Audio("./assets/audio/foodNoise2.mp3"),
+            new Audio(foodNoise0),
+            new Audio(foodNoise1),
+            new Audio(foodNoise2),
         ];
         this.soundOn = true;
         this.audioButton = document.getElementById("audioButton");
@@ -68,7 +74,6 @@ class Board {
         });
         this.difficultySelect.addEventListener("change", this.selectDifficulty);
     }
-
     selectTheme = (e) => {
         //defined as an arrow function because the scope will channge otherwise, preventing access to `this`
         const theme = e.target.options[e.target.selectedIndex].text;
@@ -214,13 +219,33 @@ class Board {
             (box) => box.x === this.currHead.x && box.y === this.currHead.y
         );
         if (result) {
-            console.log("Collision");
+            console.log("Collisoin");
             this.playing = false;
             this.gameover.innerText = `Game Over! Press any key to start a new game.`;
             this.gameoverCooldown = true;
             setInterval(() => (this.gameoverCooldown = false), 1000); //set gameoverCooldown to true for 1s, to avoid accidental restarts
         } else {
-            console.log("No collisions");
+            console.log("nope");
+        }
+    }
+
+    handleAudio() {
+        this.audioButton.addEventListener("click", () => {
+            if (this.soundOn) {
+                this.soundOn = false;
+                this.audioButton.src = audioOff;
+            } else {
+                this.soundOn = true;
+                this.audioButton.src = audioOn;
+            }
+        });
+    }
+
+    playRandomSound() {
+        if (this.soundOn) {
+            this.foodSounds[
+                Math.floor(Math.random() * this.foodSounds.length)
+            ].play();
         }
     }
 
@@ -241,26 +266,6 @@ class Board {
         this.playing = true;
         this.paused = false;
         this.move();
-    }
-
-    handleAudio() {
-        this.audioButton.addEventListener("click", () => {
-            if (this.soundOn) {
-                this.soundOn = false;
-                this.audioButton.src = "./assets/pictures/audioOff.png";
-            } else {
-                this.soundOn = true;
-                this.audioButton.src = "./assets/pictures/audioOn.png";
-            }
-        });
-    }
-
-    playRandomSound() {
-        if (this.soundOn) {
-            this.foodSounds[
-                Math.floor(Math.random() * this.foodSounds.length)
-            ].play();
-        }
     }
 
     collision() {
@@ -290,14 +295,6 @@ class Board {
             if (!this.playing) {
                 //it's game over!
                 clearInterval(loop);
-
-                if (this.paused) {
-                    this.snakeBody.forEach(
-                        (box) =>
-                            (this.boxes[box.x][box.y].style.backgroundColor =
-                                this.snakeColor)
-                    );
-                }
                 return;
             }
             this.snakeBody.forEach(
