@@ -82,6 +82,7 @@ class Board {
     console.log(this.difficultyValue);
     this.playing = false;
     this.update();
+    this.reset();
   };
 
   updateScoreText() {
