@@ -1,8 +1,8 @@
-import foodNoise0 from "../assets/audio/foodNoise0.mp3";
-import foodNoise1 from "../assets/audio/foodNoise1.mp3";
-import foodNoise2 from "../assets/audio/foodNoise2.mp3";
-import audioOn from "../assets/pictures/audioOn.png";
-import audioOff from "../assets/pictures/audioOff.png";
+import eating_sound1 from "..//../assets/audio/foodNoise0.mp3";
+import eating_sound2 from "..//..//assets/audio/foodNoise1.mp3";
+import eating_sound3 from "..//..//assets/audio/foodNoise2.mp3";
+import audioOffImg from "..//..//assets/pictures/audioOff.png";
+import audioOnImg from "..//..//assets/pictures/audioOn.png";
 
 const randRange = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min);
@@ -21,16 +21,15 @@ class Board {
     this.difficultyDic = { easy: 1000 / 5, medium: 1000 / 8, hard: 1000 / 10 };
     this.difficultyValue = this.difficultyDic["easy"];
     this.reset();
-
     // Sound section
     this.foodSounds = [
-      new Audio(foodNoise0),
-      new Audio(foodNoise1),
-      new Audio(foodNoise2),
+      new Audio(eating_sound1),
+      new Audio(eating_sound2),
+      new Audio(eating_sound3),
     ];
     this.soundOn = true;
     this.audioButton = document.getElementById("audioButton");
-
+    this.audioButton.src = audioOnImg;
     this.gameoverCooldown = false;
 
     this.themes = {
@@ -220,10 +219,10 @@ class Board {
     this.audioButton.addEventListener("click", () => {
       if (this.soundOn) {
         this.soundOn = false;
-        this.audioButton.src = audioOff;
+        this.audioButton.src = audioOffImg;
       } else {
         this.soundOn = true;
-        this.audioButton.src = audioOn;
+        this.audioButton.src = audioOnImg;
       }
     });
   }
