@@ -12,6 +12,9 @@ class Board {
     this.gameover = document.querySelector(gameoverSelector);
     this.score = document.querySelector(scoreSelector);
     this.themeselect = document.querySelector("#theme")
+    this.difficultySelect = document.querySelector("#difficulty")
+    this.difficultyDic = {"easy": 1000/5, "medium": 1000/8, "hard": 1000/10};
+    this.difficultyValue = this.difficultyDic["easy"]
     this.reset()
 
     // Sound section
@@ -47,6 +50,14 @@ class Board {
       this.themeselect.appendChild(opt)
     });
     this.themeselect.addEventListener("change", this.selectTheme)
+
+    Object.keys(this.difficultyDic).forEach(difficulty => {
+      var opt = document.createElement('option');
+      opt.value = difficulty
+      opt.innerHTML = difficulty
+      this.difficultySelect.appendChild(opt)
+    });
+    this.difficultySelect.addEventListener("change", this.selectDifficulty)
   }
 
   selectTheme = (e) => {//defined as an arrow function because the scope will channge otherwise, preventing access to `this`
@@ -55,7 +66,14 @@ class Board {
     this.snakeColor = this.themes[theme]['snake']
     this.foodColor = this.themes[theme]['food']
     this.drawboard()
+  }
 
+  selectDifficulty = (e) => {
+    const difficulty = e.target.options[e.target.selectedIndex].text
+    this.difficultyValue = this.difficultyDic[difficulty]
+    console.log('change in dif')
+    console.log(this.difficultyValue)
+    this.reset();
   }
 
   updateScoreText() {
@@ -163,7 +181,7 @@ class Board {
       }
       this.collision();
       this.update(loop);
-    }, 1000 / 10);
+    }, this.difficultyValue);
   }
 
   selfCollision() {
