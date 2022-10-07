@@ -35,7 +35,8 @@ class Board {
     this.audioButton = document.getElementById("audioButton");
 
     this.overlay = document.querySelector("#overlay");
-    this.resumeButton = document.querySelector("#resumeButton");
+    this.toggleButton = document.querySelector("#toggleButton");
+    this.leaderScore = document.querySelector("#leader__score");
     this.paused = false;
 
     this.audioButton.src = audioOnImg;
@@ -108,6 +109,7 @@ class Board {
   checkBestScore() {
     if (this.scoreNum > this.getBestScore())
       localStorage.setItem("best_score", this.scoreNum.toString());
+      this.leaderScore.innerHTML = this.scoreNum
   }
 
   getRandomFood() {
@@ -163,6 +165,7 @@ class Board {
     this.bgcolor = this.themes["pink"]["bg"];
     this.getRandomFood();
     this.updateScoreText();
+    this.leaderScore.innerHTML = this.getBestScore();
     for (let i = 0; i < this.rows; i++) {
       this.boxes[i] = [];
       for (let j = 0; j < this.cols; j++) {
@@ -308,6 +311,7 @@ class Board {
   }
 
   input() {
+    const parent = this;
     window.addEventListener("keydown", (e) => {
       const key = e.key;
       if (!this.playing && !this.gameoverCooldown && !this.paused) {
@@ -358,8 +362,14 @@ class Board {
           break;
       }
     });
-    this.resumeButton.addEventListener("click", () => {
-      this.resumeGame();
+    this.toggleButton.addEventListener("click", (e) => {
+      if(e.target.innerHTML==="Start") {
+        parent.toggleOverlay();
+        e.target.innerHTML = "Resume";
+      }
+      else {
+        this.resumeGame();
+      }
     });
   }
 }

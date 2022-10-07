@@ -59,15 +59,17 @@
 }
 .overlay__container {
   position: absolute;
+  background-color: white;
+  padding: 5% 3%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
+  color: black;
   font-size: 2rem;
   font-weight: bold;
   text-align: center;
 }
-#resumeButton {
+#toggleButton {
   margin-top: 50px;
   font-size: 1.5rem;
   font-weight: bold;
@@ -79,7 +81,7 @@
   background-color: royalblue;
   transition: 0.4s all ease;
 }
-#resumeButton:hover {
+#toggleButton:hover {
   background-color: rgb(45, 74, 162);
 }
 
