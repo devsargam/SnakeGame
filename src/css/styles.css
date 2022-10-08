@@ -69,8 +69,12 @@
   font-weight: bold;
   text-align: center;
 }
+#overlay__head{
+  color: #F37736;
+}
 #toggleButton {
   margin-top: 50px;
+  margin-bottom: 15px;
   font-size: 1.5rem;
   font-weight: bold;
   border: none;
@@ -91,6 +95,12 @@
 
 .option {
   margin: 10px 0;
+}
+.option>select{
+  background-color: aquamarine;
+  border: 1px solid black;
+  padding: 1% 2%;
+  font-size: 1rem;
 }
 
 .info {
