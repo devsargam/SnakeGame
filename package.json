@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/sargam-poudel/SnakeGame#readme",
   "dependencies": {
-    "vite": "^2.9.13"
+    "vite": "^2.9.13",
+    "yarn": "^1.22.19"
   }
 }

@@ -95,6 +95,9 @@
 
 .option {
   margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  gap : 5px;
 }
 .option>select{
   background-color: aquamarine;
@@ -102,6 +105,48 @@
   padding: 1% 2%;
   font-size: 1rem;
 }
+
+input[type=checkbox]{
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+
+label {
+  cursor: pointer;
+  width: 55px;
+  height: 30px;
+  background: grey;
+  display: block;
+  border-radius: 70px;
+  position: relative;
+  transition: 0.3s ease-in-out;
+}
+
+label:after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 60px;
+  transition: 0.3s ease-in-out;
+}
+
+input:checked + label {
+  background: #79ed59;
+}
+
+input:checked + label:after {
+  left: calc(100% - 5px);
+  transform: translateX(-100%);
+}
+
+/* label:active:after {
+  width: 100px;
+} */
 
 .info {
   color: whitesmoke;
