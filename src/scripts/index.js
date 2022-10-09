@@ -1,12 +1,5 @@
-import eating_sound1 from "..//../assets/audio/foodNoise0.mp3";
-import eating_sound2 from "..//..//assets/audio/foodNoise1.mp3";
-import eating_sound3 from "..//..//assets/audio/foodNoise2.mp3";
-import button_click from "..//..//assets/audio/buttonClick.mp3";
-
-const randRange = (min, max) => {
-  return Math.floor(Math.random() * (max - min) + min);
-};
-
+import { playButtonClickSound, playSnakeEatingSound } from "./sound";
+import { randRange } from "./utils";
 class Board {
   constructor(rows, cols, boardSelector, scoreSelector, gameoverSelector) {
     this.rows = rows;
@@ -25,14 +18,6 @@ class Board {
     this.difficultyValue = this.difficultyDic["easy"];
     this.reset();
     // Sound section
-    this.foodSounds = [
-      new Audio(eating_sound1),
-      new Audio(eating_sound2),
-      new Audio(eating_sound3),
-    ];
-    this.clickSounds = [
-      new Audio(button_click)
-    ]
     this.soundOn = true;
     this.audioButton = document.getElementById("toggle_sound");
 
@@ -85,10 +70,10 @@ class Board {
     this.bgcolor = this.themes[theme]["bg"];
     this.snakeColor = this.themes[theme]["snake"];
     this.foodColor = this.themes[theme]["food"];
-    this.selectElements.forEach((element)=>{
+    this.selectElements.forEach((element) => {
       element.style.backgroundColor = this.themes[theme]["bg"];
       element.style.color = this.themes[theme]["snake"];
-    })
+    });
     this.drawboard();
   };
 
@@ -114,9 +99,10 @@ class Board {
   }
 
   checkBestScore() {
-    if (this.scoreNum > this.getBestScore())
+    if (this.scoreNum > this.getBestScore()) {
       localStorage.setItem("best_score", this.scoreNum.toString());
-      this.leaderScore.innerHTML = this.scoreNum
+      this.leaderScore.innerHTML = this.scoreNum;
+    }
   }
 
   getRandomFood() {
@@ -170,15 +156,15 @@ class Board {
     this.snakeColor = this.themes["pink"]["snake"];
     this.foodColor = this.themes["pink"]["food"];
     this.bgcolor = this.themes["pink"]["bg"];
-    this.selectElements.forEach((element)=>{
+    this.selectElements.forEach((element) => {
       element.style.backgroundColor = this.themes["pink"]["bg"];
       element.style.color = this.themes["pink"]["snake"];
-    })
+    });
     this.audioButton.checked = true;
     this.getRandomFood();
     this.updateScoreText();
     this.leaderScore.innerHTML = this.getBestScore();
-    this.overlayHead.innerHTML = "Press Start to Play"
+    this.overlayHead.innerHTML = "Press Start to Play";
     for (let i = 0; i < this.rows; i++) {
       this.boxes[i] = [];
       for (let j = 0; j < this.cols; j++) {
@@ -205,7 +191,7 @@ class Board {
 
     this.boxes[this.food.x][this.food.y].style.backgroundColor = this.foodColor;
   }
-  move= () => {
+  move = () => {
     const loop = setInterval(() => {
       //store loop in class so we can clear it later
       this.changedDirection = false;
@@ -228,7 +214,7 @@ class Board {
       this.collision();
       this.update(loop);
     }, this.difficultyValue);
-  }
+  };
 
   selfCollision() {
     const result = this.snakeBody.some(
@@ -255,15 +241,13 @@ class Board {
 
   playRandomSound() {
     if (this.soundOn) {
-      this.foodSounds[
-        Math.floor(Math.random() * this.foodSounds.length)
-      ].play();
+      playSnakeEatingSound();
     }
   }
 
   toggleOverlay() {
-    if(this.soundOn) {
-      this.clickSounds[0].play();
+    if (this.soundOn) {
+      playButtonClickSound();
     }
     this.overlay.classList.toggle("visible");
   }
@@ -377,12 +361,11 @@ class Board {
       }
     });
     this.toggleButton.addEventListener("click", (e) => {
-      if(e.target.innerHTML==="Start") {
+      if (e.target.innerHTML === "Start") {
         parent.toggleOverlay();
-        parent.overlayHead.innerHTML = "Press Resume to Play"
+        parent.overlayHead.innerHTML = "Press Resume to Play";
         e.target.innerHTML = "Resume";
-      }
-      else {
+      } else {
         this.resumeGame();
       }
     });
