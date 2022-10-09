@@ -1,5 +1,8 @@
+import { difficulties } from "./difficulty";
 import { playButtonClickSound, playSnakeEatingSound } from "./sound";
+import { themes } from "./themes";
 import { randRange } from "./utils";
+
 class Board {
   constructor(rows, cols, boardSelector, scoreSelector, gameoverSelector) {
     this.rows = rows;
@@ -8,64 +11,54 @@ class Board {
     this.board = document.querySelector(boardSelector);
     this.gameover = document.querySelector(gameoverSelector);
     this.score = document.querySelector(scoreSelector);
-    this.themeselect = document.querySelector("#theme");
-    this.difficultySelect = document.querySelector("#difficulty");
-    this.difficultyDic = {
-      easy: 1000 / 5,
-      medium: 1000 / 8,
-      hard: 1000 / 10,
-    };
-    this.difficultyValue = this.difficultyDic["easy"];
     this.reset();
+
     // Sound section
     this.soundOn = true;
-    this.audioButton = document.getElementById("toggle_sound");
 
+    // Different selectors
+    this.themeselect = document.querySelector("#theme");
+    this.difficultySelect = document.querySelector("#difficulty");
     this.overlay = document.querySelector("#overlay");
     this.toggleButton = document.querySelector("#toggleButton");
     this.leaderScore = document.querySelector("#leader__score");
     this.overlayHead = document.querySelector("#overlay__head");
     this.selectElements = document.querySelectorAll(".option select");
-    this.paused = false;
+    this.audioButton = document.getElementById("toggle_sound");
 
+    // Imported from other files
+    this.difficulties = difficulties;
+    this.themes = themes;
+
+    // States present in game
+    this.paused = false;
     this.gameoverCooldown = false;
     this.changedDirection = false;
+    this.difficultyValue = this.difficulties["easy"];
 
-    this.themes = {
-      pink: {
-        bg: "pink",
-        food: "red",
-        snake: "black",
-      },
-      classic: {
-        bg: "#33cc33",
-        food: "#8c8c8c",
-        snake: "black",
-      },
-      dracula: {
-        bg: "#282a36",
-        food: "#6272a4",
-        snake: "#f8f8f2",
-      },
-    };
+    this.setupTheme();
+    this.setupDifficulty();
+  }
+
+  setupTheme() {
     Object.keys(this.themes).forEach((theme) => {
-      var opt = document.createElement("option");
+      const opt = document.createElement("option");
       opt.value = theme;
       opt.innerHTML = theme;
       this.themeselect.appendChild(opt);
     });
-    this.themeselect.addEventListener("change", this.selectTheme);
+  }
 
-    Object.keys(this.difficultyDic).forEach((difficulty) => {
-      var opt = document.createElement("option");
+  setupDifficulty() {
+    Object.keys(this.difficulties).forEach((difficulty) => {
+      const opt = document.createElement("option");
       opt.value = difficulty;
       opt.innerHTML = difficulty;
       this.difficultySelect.appendChild(opt);
     });
-    this.difficultySelect.addEventListener("change", this.selectDifficulty);
   }
-  selectTheme = (e) => {
-    //defined as an arrow function because the scope will channge otherwise, preventing access to `this`
+
+  selectTheme(e) {
     const theme = e.target.options[e.target.selectedIndex].text;
     this.bgcolor = this.themes[theme]["bg"];
     this.snakeColor = this.themes[theme]["snake"];
@@ -75,16 +68,16 @@ class Board {
       element.style.color = this.themes[theme]["snake"];
     });
     this.drawboard();
-  };
+  }
 
-  selectDifficulty = (e) => {
-    const difficulty = e.target.options[e.target.selectedIndex].text;
-    this.difficultyValue = this.difficultyDic[difficulty];
+  selectDifficulty(e) {
+    const difficultyValue = e.target.options[e.target.selectedIndex].text;
+    this.difficultyValue = this.difficulties[difficultyValue];
     console.log(this.difficultyValue);
     this.playing = false;
     this.update();
     this.reset();
-  };
+  }
 
   updateScoreText() {
     this.score.innerText = `Score: ${
@@ -147,6 +140,11 @@ class Board {
   }
 
   init() {
+    this.themeselect.addEventListener("change", this.selectTheme.bind(this));
+    this.difficultySelect.addEventListener(
+      "change",
+      this.selectDifficulty.bind(this)
+    );
     this.snakeBody = [
       {
         x: this.currHead.x,
