@@ -1,4 +1,14 @@
+import { playSnakeEatingSound } from "../sound";
 import { directionEnum } from "../utils";
+
+// TODO
+// Make audio when snake eats work DONE
+// Highscore and current score feature
+// Handle self collision
+// start a new game
+// Create the title screen
+// Manage themes
+// Refactor classes and styles of element
 
 export class BetterBoard {
   constructor(
@@ -18,9 +28,16 @@ export class BetterBoard {
     this.gameoverSelector = gameoverSelector;
     this.snake = snake;
     this.food = food;
+    this.score = 0;
+    this.selectElements();
     this.input();
     this.init();
-    console.log(this.snake.getSnakeBody);
+  }
+
+  selectElements() {
+    this.board = document.querySelector(this.boardSelector);
+    this.scoreElement = document.querySelector(this.scoreSelector);
+    this.gameOverElement = document.querySelector(this.gameoverSelector);
   }
 
   update() {
@@ -29,6 +46,23 @@ export class BetterBoard {
     this.snake.foodPosition = this.food.getFood;
     this.snake.move();
     this.checkCollision();
+  }
+
+  updateScore() {
+    this.scoreElement.innerText = `Score: ${
+      this.score
+    } (Best: ${this.getBestScore()})`;
+  }
+
+  getBestScore() {
+    if (!localStorage.getItem("best_score")) return 0;
+    return parseInt(localStorage.getItem("best_score"));
+  }
+
+  checkBestScore() {
+    if (this.scoreNum > this.getBestScore()) {
+      localStorage.setItem("best_score", this.scoreNum.toString());
+    }
   }
 
   drawFood() {
@@ -56,6 +90,9 @@ export class BetterBoard {
         // Recursively calls itself if food lies inside snake's body
         this.checkCollision();
       }
+      playSnakeEatingSound();
+      this.score++;
+      this.updateScore();
       this.snake.removeFoodCollision();
       this.snake.foodPosition = this.food.getFood;
     }
@@ -73,7 +110,6 @@ export class BetterBoard {
   }
 
   init() {
-    this.board = document.querySelector(this.boardSelector);
     for (let i = 0; i < this.rows; i++) {
       this.boxes[i] = [];
       for (let j = 0; j < this.cols; j++) {
@@ -83,6 +119,7 @@ export class BetterBoard {
         this.boxes[i].push(div);
       }
     }
+    this.updateScore();
   }
 
   input() {
