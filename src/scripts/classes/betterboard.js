@@ -3,8 +3,8 @@ import { directionEnum } from "../utils";
 
 // TODO
 // Make audio when snake eats work DONE
-// Highscore and current score feature
-// Handle self collision
+// Highscore and current score feature DONW
+// Handle self collision DONE
 // start a new game
 // Create the title screen
 // Manage themes
@@ -29,6 +29,7 @@ export class BetterBoard {
     this.snake = snake;
     this.food = food;
     this.score = 0;
+    this.playing = true;
     this.selectElements();
     this.input();
     this.init();
@@ -42,6 +43,7 @@ export class BetterBoard {
 
   update() {
     // Updating stuff here
+    if (!this.playing) return;
     this.changedDirection = false;
     this.snake.foodPosition = this.food.getFood;
     this.snake.move();
@@ -98,6 +100,10 @@ export class BetterBoard {
     }
     if (this.snake.selfCollision) {
       console.log("collision snake collided with itself");
+      this.gameOverElement.innerText = `Game Over! Press any key to start a new game.`;
+      this.playing = false;
+      this.gameoverCooldown = true;
+      setInterval(() => (this.gameoverCooldown = false), 1000); //set gameoverCooldown to true for 1s, to avoid accidental restarts
     }
   }
 
