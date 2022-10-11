@@ -1,5 +1,6 @@
+// 1 refers to 1fps
 export const difficulties = {
-  easy: 1000 / 5,
-  medium: 1000 / 8,
-  hard: 1000 / 10,
+  medium: 10,
+  easy: 5,
+  hard: 15,
 };
