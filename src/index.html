@@ -14,12 +14,11 @@
       <h1 id="score"></h1>
       <div id="board"></div>
       <div class="option info">press escape to pause</div>
-      
     </div>
     <div id="overlay" class="visible">
       <div class="overlay__container">
-        <h1 id="overlay__head">Press Start to Play</h1>
-        <button id="toggleButton">Start</button>
+        <h1 id="overlay__head">Press Play</h1>
+        <button id="toggleButton">Play</button>
         <div>LeaderBoard : <span id="leader__score">0</span></div>
         <div class="option">
           Select theme:
@@ -30,11 +29,12 @@
           <select id="difficulty"></select>
         </div>
         <div class="option">
-          Sounds : 
-          <input type="checkbox" id="toggle_sound" /><label for="toggle_sound"></label>
+          Sounds:
+          <input type="checkbox" id="audio" />
+          <label for="audio"></label>
         </div>
       </div>
- </div>
+    </div>
   </body>
   <script type="module" src="./scripts/index.js"></script>
 </html>
