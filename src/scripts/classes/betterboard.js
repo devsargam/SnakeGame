@@ -1,4 +1,9 @@
-import { playButtonClickSound, playSnakeEatingSound } from "../sound";
+import {
+  playButtonClickSound,
+  playSnakeEatingSound,
+  playGameOverSound,
+  playMoveSound,
+} from "../sound";
 import { directionEnum } from "../utils";
 import { Snake } from "./snake";
 import { difficulties } from "../difficulty";
@@ -81,6 +86,7 @@ export class BetterBoard {
     if (!this.playing) return;
     // Handles accidental button presses
     this.changedDirection = false;
+
     this.snake.foodPosition = this.food.getFood;
     this.snake.move();
     this.checkCollision();
@@ -147,6 +153,7 @@ export class BetterBoard {
       this.snake.foodPosition = this.food.getFood;
     }
     if (this.snake.selfCollision) {
+      if (this.soundOn) playGameOverSound();
       this.gameOverElement.innerText = `Game Over! Press any key to start a new game.`;
       this.playing = false;
       this.gameoverCooldown = true;
@@ -224,6 +231,7 @@ export class BetterBoard {
         case "w":
         case "ArrowUp":
           if (this.currDir === "DOWN" || this.changedDirection) return;
+          if (this.soundOn) playMoveSound();
           this.changedDirection = true;
           this.snake.changeVelocity = directionEnum.UP;
           this.currDir = "UP";
@@ -232,6 +240,7 @@ export class BetterBoard {
         case "ArrowLeft":
         case "a":
           if (this.currDir === "RIGHT" || this.changedDirection) return;
+          if (this.soundOn) playMoveSound();
           this.changedDirection = true;
           this.snake.changeVelocity = directionEnum.LEFT;
           this.currDir = "LEFT";
@@ -239,7 +248,7 @@ export class BetterBoard {
 
         case "ArrowDown":
         case "s":
-          if (this.currDir === "UP" || this.changedDirection) return;
+          if (this.soundOn) playMoveSound();
           this.changedDirection = true;
           this.snake.changeVelocity = directionEnum.DOWN;
           this.currDir = "DOWN";
@@ -248,6 +257,7 @@ export class BetterBoard {
         case "ArrowRight":
         case "d":
           if (this.currDir === "LEFT" || this.changedDirection) return;
+          if (this.soundOn) playMoveSound();
           this.changedDirection = true;
           this.snake.changeVelocity = directionEnum.RIGHT;
           this.currDir = "RIGHT";
