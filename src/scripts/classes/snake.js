@@ -35,6 +35,7 @@ export class Snake {
     if (this.hasVelocity()) {
       this.body.unshift(structuredClone(this.head));
       if (this.snakeCollidedWithFood) return;
+      if (this.body.length < 4) return;
       this.body.pop();
     }
   }
