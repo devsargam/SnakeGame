@@ -10,15 +10,7 @@ let delta;
 
 const snake = new Snake();
 const food = new Food();
-const board = new BetterBoard(
-  30,
-  30,
-  "#board",
-  "#score",
-  "#gameover",
-  snake,
-  food
-);
+const board = new BetterBoard(30, 30, "#board", "#score", "#gameover", food);
 
 function gameLoop() {
   requestAnimationFrame(gameLoop);

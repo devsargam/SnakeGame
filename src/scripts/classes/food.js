@@ -7,8 +7,8 @@ export class Food {
 
   randomFood() {
     this.food = {
-      x: randRange(3, 26),
-      y: randRange(3, 26),
+      x: randRange(13, 15),
+      y: randRange(13, 15),
     };
   }
 

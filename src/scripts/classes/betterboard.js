@@ -1,11 +1,12 @@
 import { playSnakeEatingSound } from "../sound";
 import { directionEnum } from "../utils";
+import { Snake } from "./snake";
 
 // TODO
 // Make audio when snake eats work DONE
 // Highscore and current score feature DONW
 // Handle self collision DONE
-// start a new game
+// start a new game DONE
 // Create the title screen
 // Manage themes
 // Refactor classes and styles of element
@@ -17,7 +18,6 @@ export class BetterBoard {
     boardSelector,
     scoreSelector,
     gameoverSelector,
-    snake,
     food
   ) {
     this.rows = rows;
@@ -26,7 +26,7 @@ export class BetterBoard {
     this.boardSelector = boardSelector;
     this.scoreSelector = scoreSelector;
     this.gameoverSelector = gameoverSelector;
-    this.snake = snake;
+    this.snake = new Snake();
     this.food = food;
     this.score = 0;
     this.playing = true;
@@ -48,6 +48,17 @@ export class BetterBoard {
     this.snake.foodPosition = this.food.getFood;
     this.snake.move();
     this.checkCollision();
+  }
+
+  reset() {
+    this.clearBoard();
+    this.playing = true;
+    delete this.snake;
+    this.snake = new Snake();
+    this.gameOverElement.innerText = "";
+    this.score = 0;
+    this.update();
+    this.draw();
   }
 
   updateScore() {
@@ -80,7 +91,8 @@ export class BetterBoard {
 
   draw() {
     // Drawing stuff here
-    this.cleanBoard();
+    if (!this.playing) return;
+    this.clearBoard();
     this.drawSnake();
     this.drawFood();
   }
@@ -99,7 +111,6 @@ export class BetterBoard {
       this.snake.foodPosition = this.food.getFood;
     }
     if (this.snake.selfCollision) {
-      console.log("collision snake collided with itself");
       this.gameOverElement.innerText = `Game Over! Press any key to start a new game.`;
       this.playing = false;
       this.gameoverCooldown = true;
@@ -107,7 +118,7 @@ export class BetterBoard {
     }
   }
 
-  cleanBoard() {
+  clearBoard() {
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols; j++) {
         this.boxes[j][i].style.backgroundColor = "red";
@@ -132,9 +143,7 @@ export class BetterBoard {
     window.addEventListener("keydown", (e) => {
       const key = e.key;
       if (!this.playing && !this.gameoverCooldown && !this.paused) {
-        //restart the game on key press
-        // this.reset();
-        // this.move();
+        this.reset();
       }
       switch (key) {
         case "w":
