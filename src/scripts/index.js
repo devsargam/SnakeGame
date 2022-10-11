@@ -13,7 +13,6 @@ function gameLoop() {
 
   let interval = 1000 / board.fps;
 
-  console.log(board.fps);
   now = Date.now();
   delta = now - then;
 

@@ -15,6 +15,7 @@ export class BetterBoard {
     this.score = 0;
     this.playing = true;
     this.soundOn = true;
+    this.paused = false;
     // Imported from other fiiles
     this.themes = themes;
     this.difficulties = difficulties;
@@ -154,12 +155,6 @@ export class BetterBoard {
     }
   }
 
-  handleAudio() {
-    this.audioButton.addEventListener("click", () => {
-      this.soundOn = !this.soundOn;
-    });
-  }
-
   clearBoard() {
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols; j++) {
@@ -178,16 +173,28 @@ export class BetterBoard {
         this.boxes[i].push(div);
       }
     }
-    this.updateScore();
-    this.setupTheme();
-    this.setupDifficulty();
+    this.initDom();
+  }
+
+  addEventListeners() {
     this.themeselect.addEventListener("change", this.selectTheme.bind(this));
     this.difficultySelect.addEventListener(
       "change",
       this.selectDifficulty.bind(this)
     );
     this.toggleButton.addEventListener("click", this.handleToggle.bind(this));
-    this.handleAudio();
+    this.audioButton.addEventListener("click", () => {
+      this.soundOn = !this.soundOn;
+      this.audioButton.checked = this.soundOn;
+      console.log("clicked sound");
+    });
+  }
+
+  initDom() {
+    this.addEventListeners();
+    this.updateScore();
+    this.setupTheme();
+    this.setupDifficulty();
 
     this.audioButton.checked = true;
     this.leaderScore.innerText = this.getBestScore();
@@ -198,18 +205,6 @@ export class BetterBoard {
       element.style.backgroundColor = this.themes["dracula"]["bg"];
       element.style.color = this.themes["dracula"]["snake"];
     });
-  }
-
-  pauseGame() {
-    this.toggleOverlay();
-    this.playing = false;
-    this.paused = true;
-  }
-
-  resumeGame() {
-    this.toggleOverlay();
-    this.playing = true;
-    this.paused = false;
   }
 
   toggleOverlay() {
@@ -260,23 +255,27 @@ export class BetterBoard {
           break;
 
         case "Escape":
+          this.paused = !this.paused;
           if (this.playing) {
-            this.pauseGame();
+            this.paused = true;
           } else {
-            this.resumeGame();
+            this.paused = false;
           }
+          this.playing = !this.playing;
+          // this.playing = !this.playing;
+          this.toggleOverlay();
           break;
       }
     });
   }
 
-  handleToggle(e) {
-    if (e.target.innerHTML === "Start") {
-      this.toggleOverlay();
-      this.overlayHead.innerHTML = "Press Resume to Play";
-      e.target.innerHTML = "Resume";
+  handleToggle() {
+    if (!this.playing) {
+      this.paused = false;
     } else {
-      this.resumeGame();
+      this.playing = true;
     }
+    this.playing = !this.playing;
+    this.toggleOverlay();
   }
 }
