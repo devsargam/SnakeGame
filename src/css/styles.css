@@ -168,3 +168,9 @@ input:checked + label:after {
 .info {
   color: whitesmoke;
 }
+
+#gameover {
+    padding: 1em;
+    background-color: whitesmoke;
+    position: absolute;
+}
