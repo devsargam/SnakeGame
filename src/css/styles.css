@@ -168,3 +168,25 @@ input:checked + label:after {
 .info {
   color: whitesmoke;
 }
+
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  height: 10vh;
+  max-width: 700px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 6px 2px #666;
+  background-color: #fff;
+  color: black;
+}
+
+.modal-text {
+  max-width: 660px;
+  margin: 30px auto;
+}

@@ -21,7 +21,7 @@ export class BetterBoard {
     this.playing = true;
     this.soundOn = true;
     this.paused = false;
-    // Imported from other fiiles
+    // Imported from other files
     this.themes = themes;
     this.difficulties = difficulties;
     this.selectElements();
@@ -31,8 +31,8 @@ export class BetterBoard {
 
   selectElements() {
     this.board = document.querySelector("#board");
+    this.modal = document.querySelector(".modal");
     this.scoreElement = document.querySelector("#score");
-    this.gameOverElement = document.querySelector("#gameover");
     this.themeselect = document.querySelector("#theme");
     this.difficultySelect = document.querySelector("#difficulty");
     this.overlay = document.querySelector("#overlay");
@@ -96,8 +96,8 @@ export class BetterBoard {
     this.clearBoard();
     this.playing = true;
     delete this.snake;
+    this.modal.style.display = 'none';
     this.snake = new Snake();
-    this.gameOverElement.innerText = "";
     this.score = 0;
     this.update();
     this.draw();
@@ -155,7 +155,7 @@ export class BetterBoard {
     }
     if (this.snake.selfCollision) {
       if (this.soundOn) playGameOverSound();
-      this.gameOverElement.innerText = `Game Over! Press any key to start a new game.`;
+      this.modal.style.display = 'inline';
       this.playing = false;
       this.gameoverCooldown = true;
       // Avoids accidental presses
