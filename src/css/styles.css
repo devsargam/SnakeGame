@@ -57,19 +57,32 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  border-radius:15px;
 }
 .overlay__container {
   position: absolute;
   background-color: white;
-  padding: 5% 3%;
+  padding: 2em;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: black;
-  font-size: 2rem;
-  font-weight: bold;
   text-align: center;
-  width: 600px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+}
+.overlayGrid {
+  display:grid;
+  grid-template-columns:190px 150px;
+  font-size: 1.3em;
+  padding: 1.5em;
+  justify-items: left;
+  max-width: 340px;
+  align-self: center;
+  align-items: center;
+  line-height: 45px;
 }
 
 #overlay__head{
@@ -77,8 +90,6 @@
 }
 
 #toggleButton {
-  margin-top: 50px;
-  margin-bottom: 15px;
   font-size: 1.5rem;
   font-weight: bold;
   border: none;
@@ -98,12 +109,17 @@
   display: flex !important;
 }
 
-.option {
-  margin: 10px 0;
-  display: flex;
-  justify-content: center;
-  gap : 5px;
+select#difficulty, select#theme {
+    padding: 6px;
+    border-radius: 5px;
+    font-weight: 600;
+    min-width: 100px;
 }
+
+.soundToggleWrapper {
+    display:flex;
+}
+
 .option>select{
   background-color: aquamarine;
   border: 1px solid black;
