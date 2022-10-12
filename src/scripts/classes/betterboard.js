@@ -104,6 +104,7 @@ export class BetterBoard {
   }
 
   updateScore() {
+    this.checkBestScore();
     this.scoreElement.innerText = `Score: ${
       this.score
     } (Best: ${this.getBestScore()})`;
@@ -115,8 +116,8 @@ export class BetterBoard {
   }
 
   checkBestScore() {
-    if (this.scoreNum > this.getBestScore()) {
-      localStorage.setItem("best_score", this.scoreNum.toString());
+    if (this.score > this.getBestScore()) {
+      localStorage.setItem("best_score", this.score.toString());
     }
   }
 
