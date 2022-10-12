@@ -17,22 +17,20 @@
     </div>
     <div id="overlay" class="visible">
       <div class="overlay__container">
-        <h1 id="overlay__head">Press Play</h1>
+        <h1 id="overlay__head">Snake Game</h1>
+        <div class="overlayGrid">
+          <div>LeaderBoard :</div><div id="leader__score">0</div>
+          <div class="option">Select theme:</div>
+          <div><select id="theme"></select></div>
+          <div class="option">Select difficulty:</div>
+          <div><select id="difficulty"></select></div>
+          <div class="option">Sounds:</div>
+          <div class="soundToggleWrapper">
+            <input type="checkbox" id="audio" />
+            <label for="audio"></label>
+          </div>
+        </div>
         <button id="toggleButton">Play</button>
-        <div>LeaderBoard : <span id="leader__score">0</span></div>
-        <div class="option">
-          Select theme:
-          <select id="theme"></select>
-        </div>
-        <div class="option">
-          Select Difficulty:
-          <select id="difficulty"></select>
-        </div>
-        <div class="option">
-          Sounds:
-          <input type="checkbox" id="audio" />
-          <label for="audio"></label>
-        </div>
       </div>
     </div>
   </body>
