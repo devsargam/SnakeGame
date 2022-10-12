@@ -122,7 +122,8 @@ export class BetterBoard {
 
   drawFood() {
     const foodPos = this.food.getFood;
-    this.boxes[foodPos.y][foodPos.x].style.backgroundColor = this.foodColor;
+    const randomColor = () => Math.floor(Math.random()*256);
+    this.boxes[foodPos.y][foodPos.x].style.backgroundColor = "rgb(" + randomColor() + "," + randomColor() + "," + randomColor() + ")";
   }
 
   drawSnake() {
