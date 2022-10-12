@@ -5,9 +5,10 @@
 ### Steps to run
 
 #### Make sure you have node installed
-
+   *Fork the repository (Click the Fork button in the top right of this page)
+    *Clone the forked repository to your local machine.
 ```bash
-git clone https://github.com/devsargam/SnakeGame.git
+git clone https://github.com/<your-username>/SnakeGame.git
 cd SnakeGame
 yarn
 yarn start
