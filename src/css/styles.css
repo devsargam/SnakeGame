@@ -62,7 +62,7 @@
 .overlay__container {
   position: absolute;
   background-color: white;
-  padding: 5% 3%;
+  padding: 2em;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -71,6 +71,7 @@
   width: 400px;
   display: flex;
   flex-direction: column;
+  border-radius: 15px;
 }
 .overlayGrid {
   display:grid;
