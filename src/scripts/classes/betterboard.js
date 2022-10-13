@@ -41,6 +41,12 @@ export class BetterBoard {
     this.overlayHead = document.querySelector("#overlay__head");
     this.selectElems = document.querySelectorAll(".option select");
     this.audioButton = document.querySelector("#audio");
+    this.CButton = document.querySelector("#ControlButton")
+    this.OButton = document.querySelector("#ObjectiveButton")
+    this.Coverlay = document.querySelector("#overlay_control");
+    this.Ooverlay = document.querySelector("#overlay_objective");
+    this.M1Button = document.querySelector("#MainButton1")
+    this.M2Button = document.querySelector("#MainButton2")
   }
 
   setupTheme() {
@@ -196,6 +202,10 @@ export class BetterBoard {
       this.audioButton.checked = this.soundOn;
       console.log("clicked sound");
     });
+    this.CButton.addEventListener("click", this.handleToggleControl.bind(this));
+    this.OButton.addEventListener("click", this.handleToggleObjective.bind(this));
+    this.M1Button.addEventListener("click", this.handleToggleMain.bind(this));
+    this.M2Button.addEventListener("click", this.handleToggleMain.bind(this));
   }
 
   initDom() {
@@ -220,6 +230,9 @@ export class BetterBoard {
       playButtonClickSound();
     }
     this.overlay.classList.toggle("visible");
+    this.overlay.style.visibility = 'visible';
+    this.Ooverlay.style.visibility = 'hidden';
+    this.Coverlay.style.visibility = 'hidden';
   }
 
   input() {
@@ -291,4 +304,47 @@ export class BetterBoard {
     this.playing = !this.playing;
     this.toggleOverlay();
   }
+  toggleOverlayControl() {
+    if (this.soundOn) {
+      playButtonClickSound();
+    }
+    this.Coverlay.classList.toggle("visible");
+    this.Coverlay.style.visibility = 'visible';
+    this.overlay.style.visibility = 'hidden';
+    this.Ooverlay.style.visibility = 'hidden';
+
+  }
+  toggleOverlayObjective() {
+    if (this.soundOn) {
+      playButtonClickSound();
+    }
+    this.Ooverlay.classList.toggle("visible");
+    this.Ooverlay.style.visibility = 'visible';
+    this.overlay.style.visibility = 'hidden';
+    this.Coverlay.style.visibility = 'hidden';
+
+  }
+  handleToggleObjective() {
+
+    this.paused = false;
+
+    this.playing = true;
+
+
+    this.toggleOverlayObjective();
+  }
+  handleToggleControl() {
+
+    this.paused = false;
+
+    this.playing = true;
+
+    this.toggleOverlayControl();
+  }
+  handleToggleMain() {
+    this.playing = true;
+
+    this.toggleOverlay();
+  }
 }
+
