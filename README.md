@@ -20,9 +20,6 @@ This game works by creating dynamically creating and updating color of divs in a
 
 ### Don't forget to leave a star ⭐
 
-### Screenshoot :
-![05-10-2022](https://user-images.githubusercontent.com/37242269/193979670-c53382b5-4abb-4682-8893-5ea0380fe227.PNG)
-
 ## How to contribute:
 
 - Drop a :star: on the Github repository (optional)<br/>
