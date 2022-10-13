@@ -249,6 +249,7 @@ export class BetterBoard {
 
         case "ArrowDown":
         case "s":
+          if (this.currDir === "UP" || this.changedDirection) return;
           if (this.soundOn) playMoveSound();
           this.changedDirection = true;
           this.snake.changeVelocity = directionEnum.DOWN;
