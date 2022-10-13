@@ -17,6 +17,7 @@
   height: 20px;
   width: 20px;
   border: 1px solid black;
+  overflow: hidden;
 }
 
 .root {
@@ -37,7 +38,6 @@
   grid-template-columns: repeat(var(--col), 20px);
   grid-template-rows: repeat(var(--row));
   border: 5px solid #fff;
-  min-height: 85vh;
 }
 
 #audioButton {
@@ -179,5 +179,5 @@ input:checked + label:after {
 }
 
 .info {
-  background-color: whitesmoke;
+  color: whitesmoke;
 }
