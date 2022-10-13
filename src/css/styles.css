@@ -180,8 +180,4 @@ input:checked + label:after {
 
 .info {
   background-color: whitesmoke;
- padding: 2em;
- border-radius: 15px;
- position: absolute;
-
 }
