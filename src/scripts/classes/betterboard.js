@@ -276,6 +276,7 @@ export class BetterBoard {
           this.playing = !this.playing;
           // this.playing = !this.playing;
           this.toggleOverlay();
+          this.toggleButton.innerText = "Resume";
           break;
       }
     });

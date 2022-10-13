@@ -36,7 +36,8 @@
   margin: 1rem;
   grid-template-columns: repeat(var(--col), 20px);
   grid-template-rows: repeat(var(--row));
-  border: 5px solid whitesmoke;
+  border: 5px solid #fff;
+  min-height: 85vh;
 }
 
 #audioButton {
@@ -178,5 +179,9 @@ input:checked + label:after {
 }
 
 .info {
-  color: whitesmoke;
+  background-color: whitesmoke;
+ padding: 2em;
+ border-radius: 15px;
+ position: absolute;
+
 }
