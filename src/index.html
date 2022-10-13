@@ -31,7 +31,53 @@
           </div>
         </div>
         <button id="toggleButton">Start Game</button>
+        <button id="ObjectiveButton">Objective</button>
+        <button id="ControlButton">Controls</button>
       </div>
+      <div id="overlay_control" class="visible_control">
+      <div class="overlay__container">
+        <h1 id="overlay__head">Controls</h1>
+        <div class="overlayGrid_">
+          <ul>
+            <li>
+              <p>Press <button type="button" class="Btn">&uarr;</button> Key on keyboard to move Snake Up.</p>
+            </li>
+            <li>
+              <p>Press <button type="button" class="Btn">&darr;</button> Key on keyboard to move Snake Down.</p>
+            </li>
+            <li>
+              <p>Press <button type="button" class="Btn">&rarr;</button> Key on keyboard to move Snake Right.</p>
+            </li>
+            <li>
+              <p>Press <button type="button" class="Btn">&larr;</button> Key on keyboard to move Snake Left.</p>
+            </li>
+            <li>
+              <p>Press <button type="button" style="  width: 25px; height: 20px;">esc</button> Key on keyboard to Pause the Game and return to Main Menu.</p>
+            </li>
+          </ul>
+
+
+        </div>
+        <button id="MainButton1">Let's Begin</button>
+      </div>
+      </div>
+      <div id="overlay_objective" class="visible_objective">
+      <div class="overlay__container">
+        <h1 id="overlay__head">Ojective of The Snake Game</h1>
+        <div class="overlayGrid_">
+          <ul>
+            <li>Feed the Hungry Snake by moving it across the field.</li>
+            <li> Snake will pass the boundary and will enter from opposite side.</li>
+            <li>You will lose the Game if the Snake eat itself.</li>
+
+          </ul>
+
+        </div>
+        <button id="MainButton2">Let's Begin</button>
+      </div>
+
+
+    </div>
     </div>
   </body>
   <script type="module" src="./scripts/index.js"></script>
