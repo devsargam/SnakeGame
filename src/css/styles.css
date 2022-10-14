@@ -171,3 +171,114 @@ input:checked + label:after {
 .info {
   color: whitesmoke;
 }
+
+#ControlButton {
+  margin-top: 10px;
+  background-color: #F37736;
+  transition: 0.4s all ease;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+#ObjectiveButton {
+  margin-top: 10px;
+  background-color: #7cfc00;
+  transition: 0.4s all ease;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  padding: 10px 20px;
+}
+#MainButton1, #MainButton2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 15px;
+  color: white;
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: royalblue;
+  transition: 0.25s all ease;
+}
+#instruction {
+  color: aqua;
+}
+
+.adjust {
+  position: absolute;
+}
+
+
+#MainButton1:hover,
+#MainButton2:hover {
+  background-color: black;
+}
+#ControlButton:hover{
+  background-color: #924720;
+}
+#ObjectiveButton:hover{
+  background-color: #57b000;
+}
+.visible_objective {
+  display: flex !important;
+}
+
+.visible_control {
+  display: flex !important;
+}
+
+#overlay_control {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 15px;
+}
+
+#overlay_objective {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 15px;
+}
+.overlayGrid_ {
+  display: grid;
+  /* grid-template-columns: 190px 150px; */
+  font-size: 1.3em;
+  padding: 1.5em;
+  justify-items: left;
+  max-width: 340px;
+  align-self: center;
+  align-items: center;
+  line-height: 45px;
+  text-align: left;
+}
+.Btn {
+  width: 20px;
+  height: 20px;
+}

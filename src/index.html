@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="logo_game.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="logo_game.ico" type="image/x-icon" />
     <title>Snake Game</title>
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
@@ -19,7 +19,8 @@
       <div class="overlay__container">
         <h1 id="overlay__head">Snake Game</h1>
         <div class="overlayGrid">
-          <div>Leaderboard:</div><div id="leader__score">0</div>
+          <div>Leaderboard:</div>
+          <div id="leader__score">0</div>
           <div class="option">Theme:</div>
           <div><select id="theme"></select></div>
           <div class="option">Difficulty:</div>
@@ -31,6 +32,66 @@
           </div>
         </div>
         <button id="toggleButton">Start Game</button>
+        <button id="ObjectiveButton">Objective</button>
+        <button id="ControlButton">Controls</button>
+      </div>
+      <div id="overlay_control" class="visible_control">
+        <div class="overlay__container">
+          <h1 id="overlay__head">Controls</h1>
+          <div class="overlayGrid_">
+            <ul>
+              <li>
+                <p>
+                  Press <button type="button" class="Btn">&uarr;</button> Key on
+                  keyboard to move Snake Up.
+                </p>
+              </li>
+              <li>
+                <p>
+                  Press <button type="button" class="Btn">&darr;</button> Key on
+                  keyboard to move Snake Down.
+                </p>
+              </li>
+              <li>
+                <p>
+                  Press <button type="button" class="Btn">&rarr;</button> Key on
+                  keyboard to move Snake Right.
+                </p>
+              </li>
+              <li>
+                <p>
+                  Press <button type="button" class="Btn">&larr;</button> Key on
+                  keyboard to move Snake Left.
+                </p>
+              </li>
+              <li>
+                <p>
+                  Press
+                  <button type="button" style="width: 25px; height: 20px">
+                    esc
+                  </button>
+                  Key on keyboard to Pause the Game and return to Main Menu.
+                </p>
+              </li>
+            </ul>
+          </div>
+          <button id="MainButton1">Let's Begin</button>
+        </div>
+      </div>
+      <div id="overlay_objective" class="visible_objective">
+        <div class="overlay__container">
+          <h1 id="overlay__head">Ojective of The Snake Game</h1>
+          <div class="overlayGrid_">
+            <ul>
+              <li>Feed the Hungry Snake by moving it across the field.</li>
+              <li>
+                Snake will pass the boundary and will enter from opposite side.
+              </li>
+              <li>You will lose the Game if the Snake eat itself.</li>
+            </ul>
+          </div>
+          <button id="MainButton2">Let's Begin</button>
+        </div>
       </div>
     </div>
   </body>
