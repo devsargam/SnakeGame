@@ -172,6 +172,28 @@ input:checked + label:after {
   color: whitesmoke;
 }
 
+.modal {
+  display: none;
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  height: 10vh;
+  max-width: 900px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 6px 2px #666;
+  background-color: #fff;
+  color: black;
+}
+
+.modal-text {
+  font-size: 1.8rem;
+  max-width: 660px;
+  margin: 3% auto;
+}
+
 #ControlButton {
   margin-top: 10px;
   background-color: #F37736;
@@ -197,6 +219,7 @@ input:checked + label:after {
   cursor: pointer;
   padding: 10px 20px;
 }
+
 #MainButton1, #MainButton2 {
   font-size: 1.5rem;
   font-weight: bold;
@@ -208,6 +231,7 @@ input:checked + label:after {
   background-color: royalblue;
   transition: 0.25s all ease;
 }
+
 #instruction {
   color: aqua;
 }
@@ -221,12 +245,15 @@ input:checked + label:after {
 #MainButton2:hover {
   background-color: black;
 }
+
 #ControlButton:hover{
   background-color: #924720;
 }
+
 #ObjectiveButton:hover{
   background-color: #57b000;
 }
+
 .visible_objective {
   display: flex !important;
 }
@@ -266,9 +293,9 @@ input:checked + label:after {
   flex-direction: column;
   border-radius: 15px;
 }
+
 .overlayGrid_ {
   display: grid;
-  /* grid-template-columns: 190px 150px; */
   font-size: 1.3em;
   padding: 1.5em;
   justify-items: left;
@@ -278,6 +305,7 @@ input:checked + label:after {
   line-height: 45px;
   text-align: left;
 }
+
 .Btn {
   width: 20px;
   height: 20px;
