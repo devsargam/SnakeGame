@@ -30,8 +30,9 @@ export class BetterBoard {
   }
 
   selectElements() {
-    this.board = document.querySelector("#board");
     this.modal = document.querySelector(".modal");
+    this.canvas = document.querySelector("#board");
+    this.ctx = this.canvas.getContext('2d');
     this.scoreElement = document.querySelector("#score");
     this.themeselect = document.querySelector("#theme");
     this.difficultySelect = document.querySelector("#difficulty");
@@ -41,6 +42,12 @@ export class BetterBoard {
     this.overlayHead = document.querySelector("#overlay__head");
     this.selectElems = document.querySelectorAll(".option select");
     this.audioButton = document.querySelector("#audio");
+    this.CButton = document.querySelector("#ControlButton");
+    this.OButton = document.querySelector("#ObjectiveButton");
+    this.Coverlay = document.querySelector("#overlay_control");
+    this.Ooverlay = document.querySelector("#overlay_objective");
+    this.M1Button = document.querySelector("#MainButton1");
+    this.M2Button = document.querySelector("#MainButton2");
   }
 
   setupTheme() {
@@ -62,13 +69,13 @@ export class BetterBoard {
   }
 
   selectTheme(e) {
-    const theme = e.target.options[e.target.selectedIndex].text;
-    this.bgcolor = this.themes[theme]["bg"];
-    this.snakeColor = this.themes[theme]["snake"];
-    this.foodColor = this.themes[theme]["food"];
+    this.selectedTheme = this.themes[e.target.options[e.target.selectedIndex].text];
+    this.bgColor = this.selectedTheme["bg"];
+    this.snakeColor = this.selectedTheme["snake"];
+    this.foodColor = this.selectedTheme["food"];
     this.selectElems.forEach((element) => {
-      element.style.backgroundColor = this.themes[theme]["bg"];
-      element.style.color = this.themes[theme]["snake"];
+      element.style.backgroundColor = this.selectedTheme["bg"];
+      element.style.color = this.selectedTheme["snake"];
     });
     this.draw();
   }
@@ -121,14 +128,21 @@ export class BetterBoard {
     }
   }
 
+  drawSquare(x, y, color, lineWidth = 1) {
+    this.ctx.fillStyle = color;
+    this.ctx.strokeStyle = 'black';
+    this.ctx.lineWidth = lineWidth;
+    this.ctx.fillRect(x * 20, y * 20, 20, 20);
+    this.ctx.strokeRect(x * 20, y * 20, 20, 20);
+  }
+
   drawFood() {
-    const foodPos = this.food.getFood;
-    this.boxes[foodPos.y][foodPos.x].style.backgroundColor = this.foodColor;
+    this.drawSquare(this.food.getFood.x, this.food.getFood.y, this.foodColor);
   }
 
   drawSnake() {
     for (let box of this.snake.getSnakeBody) {
-      this.boxes[box.y][box.x].style.backgroundColor = this.snakeColor;
+      this.drawSquare(box.x, box.y, this.snakeColor);
     }
   }
 
@@ -164,23 +178,14 @@ export class BetterBoard {
   }
 
   clearBoard() {
-    for (let i = 0; i < this.rows; i++) {
-      for (let j = 0; j < this.cols; j++) {
-        this.boxes[j][i].style.backgroundColor = this.bgcolor;
-      }
-    }
+    this.ctx.clearRect(0, 0, 600, 600);
+
+    for (let i = 0; i < 30; i++)
+      for (let j = 0; j < 30; j++)
+        this.drawSquare(i, j, this.bgColor, 0.2);
   }
 
   init() {
-    for (let i = 0; i < this.rows; i++) {
-      this.boxes[i] = [];
-      for (let j = 0; j < this.cols; j++) {
-        let div = document.createElement("div");
-        div.classList.add("visible");
-        this.board.appendChild(div);
-        this.boxes[i].push(div);
-      }
-    }
     this.initDom();
   }
 
@@ -196,6 +201,13 @@ export class BetterBoard {
       this.audioButton.checked = this.soundOn;
       console.log("clicked sound");
     });
+    this.CButton.addEventListener("click", this.handleToggleControl.bind(this));
+    this.OButton.addEventListener(
+      "click",
+      this.handleToggleObjective.bind(this)
+    );
+    this.M1Button.addEventListener("click", this.handleToggleMain.bind(this));
+    this.M2Button.addEventListener("click", this.handleToggleMain.bind(this));
   }
 
   initDom() {
@@ -208,7 +220,7 @@ export class BetterBoard {
     this.leaderScore.innerText = this.getBestScore();
     this.snakeColor = this.themes["dracula"]["snake"];
     this.foodColor = this.themes["dracula"]["food"];
-    this.bgcolor = this.themes["dracula"]["bg"];
+    this.bgColor = this.themes["dracula"]["bg"];
     this.selectElems.forEach((element) => {
       element.style.backgroundColor = this.themes["dracula"]["bg"];
       element.style.color = this.themes["dracula"]["snake"];
@@ -220,6 +232,9 @@ export class BetterBoard {
       playButtonClickSound();
     }
     this.overlay.classList.toggle("visible");
+    this.overlay.style.visibility = "visible";
+    this.Ooverlay.style.visibility = "hidden";
+    this.Coverlay.style.visibility = "hidden";
   }
 
   input() {
@@ -249,6 +264,7 @@ export class BetterBoard {
 
         case "ArrowDown":
         case "s":
+          if (this.currDir === "UP" || this.changedDirection) return;
           if (this.soundOn) playMoveSound();
           this.changedDirection = true;
           this.snake.changeVelocity = directionEnum.DOWN;
@@ -275,6 +291,7 @@ export class BetterBoard {
           this.playing = !this.playing;
           // this.playing = !this.playing;
           this.toggleOverlay();
+          this.toggleButton.innerText = "Resume";
           break;
       }
     });
@@ -287,6 +304,43 @@ export class BetterBoard {
       this.playing = true;
     }
     this.playing = !this.playing;
+    this.toggleOverlay();
+  }
+  toggleOverlayControl() {
+    if (this.soundOn) {
+      playButtonClickSound();
+    }
+    this.Coverlay.classList.toggle("visible");
+    this.Coverlay.style.visibility = "visible";
+    this.overlay.style.visibility = "hidden";
+    this.Ooverlay.style.visibility = "hidden";
+  }
+  toggleOverlayObjective() {
+    if (this.soundOn) {
+      playButtonClickSound();
+    }
+    this.Ooverlay.classList.toggle("visible");
+    this.Ooverlay.style.visibility = "visible";
+    this.overlay.style.visibility = "hidden";
+    this.Coverlay.style.visibility = "hidden";
+  }
+  handleToggleObjective() {
+    this.paused = false;
+
+    this.playing = true;
+
+    this.toggleOverlayObjective();
+  }
+  handleToggleControl() {
+    this.paused = false;
+
+    this.playing = true;
+
+    this.toggleOverlayControl();
+  }
+  handleToggleMain() {
+    this.playing = true;
+
     this.toggleOverlay();
   }
 }
