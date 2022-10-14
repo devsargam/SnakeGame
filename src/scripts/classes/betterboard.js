@@ -218,12 +218,12 @@ export class BetterBoard {
 
     this.audioButton.checked = true;
     this.leaderScore.innerText = this.getBestScore();
-    this.snakeColor = this.themes["dracula"]["snake"];
-    this.foodColor = this.themes["dracula"]["food"];
-    this.bgColor = this.themes["dracula"]["bg"];
+    this.snakeColor = this.themes["Dracula"]["snake"];
+    this.foodColor = this.themes["Dracula"]["food"];
+    this.bgColor = this.themes["Dracula"]["bg"];
     this.selectElems.forEach((element) => {
-      element.style.backgroundColor = this.themes["dracula"]["bg"];
-      element.style.color = this.themes["dracula"]["snake"];
+      element.style.backgroundColor = this.themes["Dracula"]["bg"];
+      element.style.color = this.themes["Dracula"]["snake"];
     });
   }
 
