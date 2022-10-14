@@ -29,7 +29,7 @@ export const themes = {
     food: "#E80F88",
     snake: "#FFD372",
   },
-  Hacktoberfest: {
+  Halloween: {
     bg: "#151515",
     food: "#FF5B00",
     snake: "#FFEE63",
