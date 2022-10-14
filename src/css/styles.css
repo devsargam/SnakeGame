@@ -39,7 +39,7 @@
 }
 
 #overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
@@ -51,6 +51,7 @@
   align-items: center;
   flex-direction: column;
 }
+
 .overlay__container {
   position: absolute;
   background-color: white;
@@ -66,6 +67,7 @@
   flex-direction: column;
   border-radius: 15px;
 }
+
 .overlayGrid {
   display: grid;
   grid-template-columns: 190px 150px;
