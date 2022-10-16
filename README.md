@@ -14,7 +14,7 @@ yarn
 yarn start
 ```
 
-This game works by creating dynamically creating and updating color of divs in a grid which simulates a snake moment and food.
+This game works by drawing rectangles in canvas while making them seem like food and snake
 
 ### Feel free to contribute to this project by forking this project
 
