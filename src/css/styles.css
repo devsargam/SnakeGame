@@ -17,7 +17,8 @@
   height: 100vh;
   width: 100vw;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-top: 2em;
   align-items: center;
   flex-direction: column;
   background-color: royalblue;
@@ -311,4 +312,22 @@ input:checked + label:after {
 .Btn {
   width: 20px;
   height: 20px;
+}
+
+.controlBtn:hover{
+  cursor:pointer;
+}
+
+#left{
+  transform: rotate(90deg) translate(-43em, -31.6em)
+}
+
+#right{
+  transform: rotate(270deg) translate(35em,42.5em)
+}
+
+#crossArrow{
+  translate: -17em -76em;
+  width: 4em;
+  height: 4em;
 }
