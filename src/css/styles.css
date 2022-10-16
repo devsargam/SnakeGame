@@ -17,8 +17,7 @@
   height: 100vh;
   width: 100vw;
   display: flex;
-  justify-content: flex-start;
-  padding-top: 2em;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
   background-color: royalblue;
@@ -29,6 +28,8 @@
   background-color: black;
   margin: 1rem;
   border: 5px solid #fff;
+  width: 89vw;
+  height: 89vw;
 }
 
 #audioButton {
@@ -183,10 +184,8 @@ input:checked + label:after {
   top: 0;
   bottom: 0;
   margin: auto;
-  height: fit-content;
+  height: 10vh;
   max-width: 900px;
-  width: 80%;
-  padding: 36px 24px;
   border-radius: 5px;
   box-shadow: 0px 0px 6px 2px #666;
   background-color: #fff;
@@ -195,12 +194,13 @@ input:checked + label:after {
 
 .modal-text {
   font-size: 1.8rem;
-  text-align: center;
+  max-width: 660px;
+  margin: 3% auto;
 }
 
 #ControlButton {
   margin-top: 10px;
-  background-color: #F37736;
+  background-color: #f37736;
   transition: 0.4s all ease;
   font-size: 1.5rem;
   font-weight: bold;
@@ -224,7 +224,8 @@ input:checked + label:after {
   padding: 10px 20px;
 }
 
-#MainButton1, #MainButton2 {
+#MainButton1,
+#MainButton2 {
   font-size: 1.5rem;
   font-weight: bold;
   border: none;
@@ -244,17 +245,22 @@ input:checked + label:after {
   position: absolute;
 }
 
+#score {
+  margin-top: 21rem;
+  font-size: 2.4rem;
+  translate: 0.6em;
+}
 
 #MainButton1:hover,
 #MainButton2:hover {
   background-color: black;
 }
 
-#ControlButton:hover{
+#ControlButton:hover {
   background-color: #924720;
 }
 
-#ObjectiveButton:hover{
+#ObjectiveButton:hover {
   background-color: #57b000;
 }
 
@@ -313,22 +319,35 @@ input:checked + label:after {
 .Btn {
   width: 20px;
   height: 20px;
-}
-
-.controlBtn:hover{
-  cursor:pointer;
-}
-
-#left{
-  transform: rotate(90deg) translate(-43em, -31.6em)
-}
-
-#right{
-  transform: rotate(270deg) translate(35em,42.5em)
-}
-
-#crossArrow{
-  translate: -17em -76em;
   width: 4em;
+}
+
+.controlBtn:hover {
+  cursor: pointer;
+}
+
+#up {
+  transform: rotateX(180deg) translate(21em, 19.7em);
+  width: 4em;
+}
+
+#down{
+  translate: 21em -10.3em;
+  width: 4em;
+}
+
+#left {
+  transform: rotate(90deg) translate(-25em, -18.2em);
+  width: 4em;
+}
+
+#right {
+  transform: rotate(270deg) translate(21em, 23.8em);
+  width: 4em;
+}
+
+#crossArrow {
+  translate: -12em -44.4em;
+  width: 3em;
   height: 4em;
 }
