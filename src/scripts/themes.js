@@ -33,6 +33,15 @@ export const themes = {
     bg: "#151515",
     food: "#FF5B00",
     snake: "#FFEE63",
-  }
+  },
+  Plain: {
+    bg: "#DEDEDE",
+    food: "#FF4308",
+    snake: "#62FF11",
+  },
+  City: {
+    bg: "#444444",
+    food: "#FD49E3",
+    snake: "#E2E2E2",
+  },
 };
-

@@ -183,8 +183,10 @@ input:checked + label:after {
   top: 0;
   bottom: 0;
   margin: auto;
-  height: 10vh;
+  height: fit-content;
   max-width: 900px;
+  width: 80%;
+  padding: 36px 24px;
   border-radius: 5px;
   box-shadow: 0px 0px 6px 2px #666;
   background-color: #fff;
@@ -193,8 +195,7 @@ input:checked + label:after {
 
 .modal-text {
   font-size: 1.8rem;
-  max-width: 660px;
-  margin: 3% auto;
+  text-align: center;
 }
 
 #ControlButton {
