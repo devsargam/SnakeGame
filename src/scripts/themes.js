@@ -44,4 +44,14 @@ export const themes = {
     food: "#FD49E3",
     snake: "#E2E2E2",
   },
+  Cyperpunk: {
+    bg: "#123E7D",
+    food: "#01FE9F",
+    snake: "#FD01FE",
+  },
+  "Cookies 'n' Cream": {
+    bg: "#DCC5AE",
+    food: "#E86098",
+    snake: "#753728",
+  }
 };
