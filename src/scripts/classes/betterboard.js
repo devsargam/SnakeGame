@@ -34,6 +34,7 @@ export class BetterBoard {
     this.canvas = document.querySelector("#board");
     this.ctx = this.canvas.getContext('2d');
     this.scoreElement = document.querySelector("#score");
+    this.bestscoreElement = document.querySelector("#best-score");
     this.themeselect = document.querySelector("#theme");
     this.difficultySelect = document.querySelector("#difficulty");
     this.overlay = document.querySelector("#overlay");
@@ -112,9 +113,8 @@ export class BetterBoard {
 
   updateScore() {
     this.checkBestScore();
-    this.scoreElement.innerText = `Score: ${
-      this.score
-    } (Best: ${this.getBestScore()})`;
+    this.scoreElement.innerText = `Score: ${this.score}`;
+    this.bestscoreElement.innerText = `Best: ${this.getBestScore()}`;
   }
 
   getBestScore() {

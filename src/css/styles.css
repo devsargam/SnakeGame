@@ -17,11 +17,15 @@
   height: 100vh;
   width: 100vw;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  flex-direction: column;
-  background-color: royalblue;
+  background-color: #533E2D;
+  color: #FCB1A6;
   overflow: hidden;
+}
+
+.scores{
+  font-size: 30px;
 }
 
 #board {
