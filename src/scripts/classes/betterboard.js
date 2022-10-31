@@ -11,12 +11,13 @@ import { themes } from "../themes";
 
 export class BetterBoard {
   constructor(rows, cols, food) {
-    this.fps = 10;
+    this.food = food;
     this.rows = rows;
     this.cols = cols;
-    this.boxes = [];
+
     this.snake = new Snake();
-    this.food = food;
+    this.fps = 10;
+    this.boxes = [];
     this.score = 0;
     this.playing = true;
     this.soundOn = true;
@@ -32,7 +33,7 @@ export class BetterBoard {
   selectElements() {
     this.modal = document.querySelector(".modal");
     this.canvas = document.querySelector("#board");
-    this.ctx = this.canvas.getContext('2d');
+    this.ctx = this.canvas.getContext("2d");
     this.scoreElement = document.querySelector("#score");
     this.bestscoreElement = document.querySelector("#best-score");
     this.themeselect = document.querySelector("#theme");
@@ -47,8 +48,8 @@ export class BetterBoard {
     this.OButton = document.querySelector("#ObjectiveButton");
     this.Coverlay = document.querySelector("#overlay_control");
     this.Ooverlay = document.querySelector("#overlay_objective");
-    this.M1Button = document.querySelector("#MainButton1");
-    this.M2Button = document.querySelector("#MainButton2");
+    this.m1Button = document.querySelector("#MainButton1");
+    this.m2Button = document.querySelector("#MainButton2");
   }
 
   setupTheme() {
@@ -70,7 +71,8 @@ export class BetterBoard {
   }
 
   selectTheme(e) {
-    this.selectedTheme = this.themes[e.target.options[e.target.selectedIndex].text];
+    this.selectedTheme =
+      this.themes[e.target.options[e.target.selectedIndex].text];
     this.bgColor = this.selectedTheme["bg"];
     this.snakeColor = this.selectedTheme["snake"];
     this.foodColor = this.selectedTheme["food"];
@@ -104,7 +106,7 @@ export class BetterBoard {
     this.clearBoard();
     this.playing = true;
     delete this.snake;
-    this.modal.style.display = 'none';
+    this.modal.style.display = "none";
     this.snake = new Snake();
     this.score = 0;
     this.update();
@@ -130,7 +132,7 @@ export class BetterBoard {
 
   drawSquare(x, y, color, lineWidth = 1) {
     this.ctx.fillStyle = color;
-    this.ctx.strokeStyle = 'black';
+    this.ctx.strokeStyle = "black";
     this.ctx.lineWidth = lineWidth;
     this.ctx.fillRect(x * 20, y * 20, 20, 20);
     this.ctx.strokeRect(x * 20, y * 20, 20, 20);
@@ -169,7 +171,7 @@ export class BetterBoard {
     }
     if (this.snake.selfCollision) {
       if (this.soundOn) playGameOverSound();
-      this.modal.style.display = 'inline';
+      this.modal.style.display = "inline";
       this.playing = false;
       this.gameoverCooldown = true;
       // Avoids accidental presses
@@ -181,8 +183,9 @@ export class BetterBoard {
     this.ctx.clearRect(0, 0, 600, 600);
 
     for (let i = 0; i < 30; i++)
-      for (let j = 0; j < 30; j++)
+      for (let j = 0; j < 30; j++) {
         this.drawSquare(i, j, this.bgColor, 0.2);
+      }
   }
 
   init() {
@@ -206,8 +209,8 @@ export class BetterBoard {
       "click",
       this.handleToggleObjective.bind(this)
     );
-    this.M1Button.addEventListener("click", this.handleToggleMain.bind(this));
-    this.M2Button.addEventListener("click", this.handleToggleMain.bind(this));
+    this.m1Button.addEventListener("click", this.handleToggleMain.bind(this));
+    this.m2Button.addEventListener("click", this.handleToggleMain.bind(this));
   }
 
   initDom() {
@@ -278,7 +281,6 @@ export class BetterBoard {
           this.changedDirection = true;
           this.snake.changeVelocity = directionEnum.RIGHT;
           this.currDir = "RIGHT";
-          console.log(this.currDir);
           break;
 
         case "Escape":
@@ -289,7 +291,6 @@ export class BetterBoard {
             this.paused = false;
           }
           this.playing = !this.playing;
-          // this.playing = !this.playing;
           this.toggleOverlay();
           this.toggleButton.innerText = "Resume";
           break;
@@ -306,6 +307,7 @@ export class BetterBoard {
     this.playing = !this.playing;
     this.toggleOverlay();
   }
+
   toggleOverlayControl() {
     if (this.soundOn) {
       playButtonClickSound();
@@ -315,6 +317,7 @@ export class BetterBoard {
     this.overlay.style.visibility = "hidden";
     this.Ooverlay.style.visibility = "hidden";
   }
+
   toggleOverlayObjective() {
     if (this.soundOn) {
       playButtonClickSound();
@@ -324,23 +327,21 @@ export class BetterBoard {
     this.overlay.style.visibility = "hidden";
     this.Coverlay.style.visibility = "hidden";
   }
+
   handleToggleObjective() {
     this.paused = false;
-
     this.playing = true;
-
     this.toggleOverlayObjective();
   }
+
   handleToggleControl() {
     this.paused = false;
-
     this.playing = true;
-
     this.toggleOverlayControl();
   }
+
   handleToggleMain() {
     this.playing = true;
-
     this.toggleOverlay();
   }
 }
