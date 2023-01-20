@@ -82,6 +82,7 @@ export class BetterBoard {
       element.style.color = this.selectedTheme["snake"];
     });
     this.draw();
+
   }
 
   selectDifficulty(e) {
@@ -158,7 +159,7 @@ export class BetterBoard {
   }
 
   checkCollision() {
-    if (this.snake.foodCollision) {
+    if (this.snake.foodCollision && this.playing) {
       this.food.randomFood();
       if (this.snake.containsFood(this.food.getFood)) {
         // Recursively calls itself if food lies inside snake's body
@@ -170,13 +171,27 @@ export class BetterBoard {
       this.snake.removeFoodCollision();
       this.snake.foodPosition = this.food.getFood;
     }
-    if (this.snake.selfCollision) {
+    if (this.snake.selfCollision && this.playing) {
       if (this.soundOn) playGameOverSound();
       this.modal.style.display = "inline";
       this.playing = false;
       this.gameoverCooldown = true;
       // Avoids accidental presses
       setInterval(() => (this.gameoverCooldown = false), 1000);
+    }
+
+    if (this.snake.wallsCollision && this.fps == 15 && this.playing) {
+      if (this.soundOn) playGameOverSound();
+      this.modal.style.display = "inline";
+      this.playing = false;
+      this.gameoverCooldown = true;
+      // Avoids accidental presses
+      setInterval(() => (this.gameoverCooldown = false), 1000);
+    } else if (this.snake.wallsCollision && this.fps < 14 && this.playing) {
+    if (this.snake.head.x > 30 - 1) this.snake.head.x = 0;
+    if (this.snake.head.x < 0) this.snake.head.x = 30 - 2;
+    if (this.snake.head.y > 30 - 1) this.snake.head.y = 0;
+    if (this.snake.head.y < 0) this.snake.head.y = 30 - 2;
     }
   }
 

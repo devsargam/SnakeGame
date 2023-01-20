@@ -15,6 +15,7 @@ export class Snake {
     };
     this.snakeCollidedWithItself = false;
     this.snakeCollidedWithFood = false;
+    this.snakeCollideWithWalls = false;
   }
 
   hasVelocity() {
@@ -25,10 +26,6 @@ export class Snake {
     const { x, y } = this.velocity;
     this.head.x += x;
     this.head.y += y;
-    if (this.head.x > 30 - 1) this.head.x = 0;
-    if (this.head.x < 0) this.head.x = 30 - 1;
-    if (this.head.y > 30 - 1) this.head.y = 0;
-    if (this.head.y < 0) this.head.y = 30 - 1;
   }
 
   snakeGrow() {
@@ -45,6 +42,7 @@ export class Snake {
     this.increaseHead();
     this.checkSelfCollision();
     this.checkCollisionWithFood();
+    this.checkCollisionWithWalls()
     this.snakeGrow();
   }
 
@@ -67,6 +65,13 @@ export class Snake {
       this.snakeCollidedWithItself = true;
   }
 
+  checkCollisionWithWalls() {
+    if (this.head.x > 30 - 1) this.snakeCollideWithWalls = true
+    if (this.head.x < 0) this.snakeCollideWithWalls = true
+    if (this.head.y > 30 - 1) this.snakeCollideWithWalls = true
+    if (this.head.y < 0) this.snakeCollideWithWalls = true
+  }
+
   containsFood(food) {
     return this.body.some((box) => box.x === food.x && box.y === food.y);
   }
@@ -77,6 +82,10 @@ export class Snake {
 
   get selfCollision() {
     return this.snakeCollidedWithItself;
+  }
+
+  get wallsCollision() {
+    return this.snakeCollideWithWalls;
   }
 
   removeFoodCollision() {
